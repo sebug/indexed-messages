@@ -10,6 +10,8 @@ class ViewModel {
 
 	console.log('The key in the sub component is ' + this.key());
 
+	this.messages = ko.observableArray([]);
+	
 	this.getData = this.getData.bind(this);
 
 	setTimeout(() => {
@@ -20,7 +22,10 @@ class ViewModel {
     async getData() {
 	let response = await fetch('/api/GetMessagesTrigger?code=' + this.key());
 	let responseModel = await response.json();
-	console.log(responseModel);
+
+	if (responseModel) {
+	    this.messages(responseModel);
+	}
     }
 }
 

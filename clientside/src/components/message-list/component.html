@@ -1,4 +1,25 @@
 <div>
   <h2>Messages</h2>
-  
+  <table>
+    <thead>
+      <tr>
+	<th>Date</th>
+	<th>From</th>
+	<th>To</th>
+	<th>Message</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- ko if: messages -->
+      <!-- ko foreach: messages -->
+      <tr>
+	<td><span data-bind="text: date"></span></td>
+	<td><span data-bind="text: from"></span></td>
+	<td><span data-bind="text: to"></span></td>
+	<td><span data-bind="text: message"></span></td>
+      </tr>
+      <!-- /ko -->
+      <!-- /ko -->
+    </tbody>
+  </table>
 </div>
