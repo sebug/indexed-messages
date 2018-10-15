@@ -1,0 +1,9 @@
+{
+  "name": "indexed-messages",
+  "version": "1.0.0",
+  "description": "Stores a message log (for radio exchanges for example) and synchronizes it with an Azure function.",
+  "main": "index.js",
+  "author": "Sebastian Gfeller",
+  "license": "MIT",
+  "private": false
+}
