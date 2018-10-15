@@ -9,7 +9,7 @@
             },
             "backendUri": "https://indexedmessages.blob.core.windows.net/indexedmessagesstatic/index.html"
         },
-	"serviceworker": {
+	"buildjs": {
 	    "matchCondition": {
 		"methods": [
 		    "GET"
@@ -17,6 +17,15 @@
 		"route": "/build.js"
 	    },
 	    "backendUri": "https://indexedmessages.blob.core.windows.net/indexedmessagesstatic/build.js"
+	},
+	"polyfill": {
+	    "matchCondition": {
+		"methods": [
+		    "GET"
+		],
+		"route": "/polyfill.min.js"
+	    },
+	    "backendUri": "https://indexedmessages.blob.core.windows.net/indexedmessagesstatic/polyfill.min.js"
 	}
     }
 }

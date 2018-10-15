@@ -7,7 +7,7 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "build": "webpack"
+    "build": "webpack && cp node_modules/babel-polyfill/dist/polyfill.min.js dist/"
   },
   "devDependencies": {
     "@babel/core": "^7.1.2",
@@ -20,6 +20,7 @@
     "webpack-cli": "^3.1.2"
   },
   "dependencies": {
+    "babel-polyfill": "^6.26.0",
     "knockout": "^3.4.2"
   }
 }
