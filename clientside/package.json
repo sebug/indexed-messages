@@ -5,11 +5,12 @@
   "main": "index.js",
   "author": "Sebastian Gfeller",
   "license": "MIT",
-    "private": false,
-    "scripts": {
-	"build": "echo ohai"
-    },
+  "private": false,
+  "scripts": {
+    "build": "webpack"
+  },
   "devDependencies": {
+    "@babel/core": "^7.1.2",
     "babel-core": "^6.26.3",
     "babel-loader": "^8.0.4",
     "babel-preset-env": "^1.7.0",
