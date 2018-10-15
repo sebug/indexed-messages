@@ -8,12 +8,17 @@ module.exports = function (context, req) {
 
     tableService.queryEntities('radioMessages', query, null, function(error, result, response) {
 	if (!error) {
-	    context.log('Got something back');
-	    context.log(JSON.stringify(result.entries));
+	    let entries = result.entries.map(row => {
+		return {
+		    date: row.RowKey._,
+		    from: row.From._,
+		    to: row.To._,
+		    message: row.Message._
+		};
+	    });
+	    context.log(JSON.stringify(entries));
 	    context.res = {
-		body: {
-		    msg: "Hey from JSON"
-		}
+		body: entries
 	    };
 	    context.done();
 	} else {
