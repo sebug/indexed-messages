@@ -19,6 +19,7 @@ steps:
   displayName: 'npm install and build'
 
 - script: |
+    echo Expanding variable
     echo $(AZURE_STORAGE_CONNECTION_STRING)
   displayName: 'Publish to blob storage'
 
