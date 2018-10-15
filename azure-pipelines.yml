@@ -18,6 +18,11 @@ steps:
     npm run build
   displayName: 'npm install and build'
 
+- script: |
+    echo $AZURE_STORAGE_CONNECTION_STRING
+  displayName: 'Publish to blob storage'
+
 - task: PublishBuildArtifacts@1
   inputs:
     PathtoPublish: '$(System.DefaultWorkingDirectory)/clientside/dist'
+
