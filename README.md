@@ -13,4 +13,8 @@ The build results are put into a storage container.
 	az storage container create --name indexedmessagesstatic
 	az storage container set-permission --name indexedmessagesstatic --public-access blob
 
+The following steps will be done automatically by the pipeline, but in the meantime and for reference
+
+	az storage blob upload --container-name indexedmessagesstatic --file clientside/dist/index.html --name index.html --content-type "text/html"
+	az storage blob upload --container-name indexedmessagesstatic --file clientside/dist/build.js --name build.js --content-type "application/javascript"
 
