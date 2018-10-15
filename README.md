@@ -8,3 +8,9 @@ This project is an exploration of IndexedDB together with a function to store so
 
 Add CI with github. Set function app version to 2.
 
+The build results are put into a storage container.
+
+	az storage container create --name indexedmessagesstatic
+	az storage container set-permission --name indexedmessagesstatic --public-access blob
+
+
