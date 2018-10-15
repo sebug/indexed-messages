@@ -1,6 +1,8 @@
 module.exports = function (context, req) {
     context.res = {
-	body: "Initial data"
+	body: {
+	    msg: "Hey from JSON"
+	}
     };
     context.done();
 };
