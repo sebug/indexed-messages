@@ -6,7 +6,7 @@ module.exports = function (context, req) {
 	.top(100)
 	.where('PartitionKey eq ?', 'prod');
 
-    tableService.queryEntities('mytable', query, null, function(error, result, response) {
+    tableService.queryEntities('radioMessages', query, null, function(error, result, response) {
 	if (!error) {
 	    context.log('Got something back');
 	    context.log(JSON.stringify(result.entries));
