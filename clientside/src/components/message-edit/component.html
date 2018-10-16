@@ -2,12 +2,15 @@
   <legend>
     <h3>New Message</h3>
   </legend>
-  <label>Date/Time <input name="datetime" type="datetime-local">
+  <!-- ko with: message -->
+  <label>Date/Time <input name="datetime" data-bind="value: dateTime" type="datetime-local">
   </label>
-  <label>From <input name="from"></label>
-  <label>To <input name="to"></label>
+  <label>From <input name="from" data-bind="value: from"></label>
+  <label>To <input name="to" data-bind="value: to"></label>
   <label>Message
-    <textarea name="message">
+    <textarea name="message" data-bind="textInput: message">
     </textarea>
   </label>
+  <!-- /ko -->
+  <button data-bind="click: postMessage">Post</button>
 </fieldset>

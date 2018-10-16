@@ -9,6 +9,12 @@ class ViewModel {
 	    this.key = ko.observable(this.key);
 	}
 	this.message = ko.observable(new Message({}));
+	this.postMessage = this.postMessage.bind(this);
+    }
+
+    postMessage() {
+	console.log(this.message().message());
+	return false;
     }
 }
 
