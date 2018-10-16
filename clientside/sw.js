@@ -1,5 +1,5 @@
 // The service worker to be used for this sub-element.
-var CACHE_NAME = 'my-static-site-cache-v1.7';
+var CACHE_NAME = 'my-static-site-cache-v1.8';
 var DYNAMIC_CACHE_NAME = 'my-dynamic-site-cache';
 var urlsToCache = [
   '/',
@@ -19,8 +19,7 @@ self.addEventListener('install', function (e) {
 	    }));
 });
 
-// Deal with statically cached content
-self.addEventListener('fetch', function (e) {
+function cacheThenNetworkStrategy(e) {
     e.respondWith(
 	caches.match(e.request)
 	    .then(function (response) {
@@ -49,4 +48,9 @@ self.addEventListener('fetch', function (e) {
 		    return response;
 		});
 	    }));
+}
+
+// Deal with statically cached content
+self.addEventListener('fetch', function (e) {
+    cacheThenNetworkStrategy(e);
 });
