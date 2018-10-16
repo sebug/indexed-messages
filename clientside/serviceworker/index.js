@@ -54,8 +54,8 @@ function cacheThenNetworkStrategy(e) {
 function getMessagesDBPromise() {
     return idb.open('messages-db', 1, function (upgradeDB) {
 	console.log('making a new object store');
-	if (!upgradeDb.objectStoreNames.contains('messages')) {
-	    upgradeDb.createObjectStore('messages', { keyPath: 'dateTime' });
+	if (!upgradeDB.objectStoreNames.contains('messages')) {
+	    upgradeDB.createObjectStore('messages', { keyPath: 'dateTime' });
 	}
     });
 }
@@ -71,6 +71,8 @@ function storeFullResultsInIndexedDB(messages) {
 	    });
 	}
 	return tx.complete;
+    }, function (err) {
+	console.log(err);
     });
     
     console.log(idb);
