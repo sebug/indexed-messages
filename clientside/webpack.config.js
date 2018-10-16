@@ -24,7 +24,10 @@ let mainConfig = {
 };
 
 let serviceWorkerConfig = {
-    mode: 'production',
+    mode: 'development',
+    optimization: {
+	minimize: false
+    },
     entry: path.join(__dirname, '/serviceworker/index.js'),
     output: {
         filename: 'sw.js',
@@ -32,8 +35,7 @@ let serviceWorkerConfig = {
     module:{
         rules:[{
            test: /\.js$/,
-           exclude: /node_modules/,
-           loader: 'babel-loader'
+           exclude: /node_modules/
         }]
     }
 };
