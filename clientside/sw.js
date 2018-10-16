@@ -1,5 +1,5 @@
 // The service worker to be used for this sub-element.
-var CACHE_NAME = 'my-static-site-cache-v1.5';
+var CACHE_NAME = 'my-static-site-cache-v1.6';
 var DYNAMIC_CACHE_NAME = 'my-dynamic-site-cache';
 var urlsToCache = [
   '/',
@@ -25,11 +25,11 @@ self.addEventListener('fetch', function (e) {
 	caches.match(e.request)
 	    .then(function (response) {
 		console.log(e.request);
-		if (response) {
+		if (response && e.request.url.indexOf('/api') < 0) {
 		    return response;
 		}
 
-		console.log('matched but did not find response');
+		console.log('matched but did not find response, or response is stale');
 
 		// so that we can store both in cache and perform it
 		var fetchRequest = e.request.clone();
