@@ -1,17 +1,25 @@
 <form class="message-edit" data-bind="submit: postMessage">
-<fieldset>
-  <legend>
-    <h3>New Message</h3>
-  </legend>
-  <!-- ko with: message -->
-  <label>Date/Time <input name="datetime" data-bind="value: dateTime">
-  </label>
-  <label>From <input name="from" data-bind="value: from, hasFocus: $parent.fromDateHasFocus"></label>
-  <label>To <input name="to" data-bind="value: to"></label>
-  <label>Message
-    <textarea name="message" data-bind="textInput: message">
-    </textarea>
-  </label>
+  <fieldset>
+    <legend>
+      <h3>New Message</h3>
+    </legend>
+    <!-- ko with: message -->
+    <div class="date-time-input">
+      <label>Date/Time <input name="datetime" data-bind="value: dateTime">
+      </label>
+    </div>
+    <div class="from-input">
+      <label>From <input name="from" data-bind="value: from, hasFocus: $parent.fromDateHasFocus"></label>
+    </div>
+    <div class="to-input">
+      <label>To <input name="to" data-bind="value: to"></label>
+    </div>
+    <div class="message-input">
+      <label>Message
+	<textarea name="message" data-bind="textInput: message">
+	</textarea>
+      </label>
+    </div>
   <!-- /ko -->
   <button type="submit">Post</button>
 </fieldset>

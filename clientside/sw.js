@@ -1,5 +1,5 @@
 // The service worker to be used for this sub-element.
-var CACHE_NAME = 'my-static-site-cache-v1.4';
+var CACHE_NAME = 'my-static-site-cache-v1.5';
 var DYNAMIC_CACHE_NAME = 'my-dynamic-site-cache';
 var urlsToCache = [
   '/',
@@ -24,6 +24,7 @@ self.addEventListener('fetch', function (e) {
     e.respondWith(
 	caches.match(e.request)
 	    .then(function (response) {
+		console.log(e.request);
 		if (response) {
 		    return response;
 		}
