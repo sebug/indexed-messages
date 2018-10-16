@@ -11,12 +11,15 @@ class ViewModel {
 	this.message = ko.observable(new Message({}));
 	this.postMessage = this.postMessage.bind(this);
 	this.postToMessageTrigger = this.postToMessageTrigger.bind(this);
+	this.successCallback = params.successCallback;
     }
 
     postMessage() {
 	console.log(this.message().message());
 	this.postToMessageTrigger(ko.toJS(this.message())).then(res => {
-	    console.log(res);
+	    if (this.successCallback) {
+		this.successCallback(res);
+	    }
 	});
 	return false;
     }

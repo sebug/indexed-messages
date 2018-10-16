@@ -12,6 +12,11 @@ class ViewModel {
 	let postKey = sps.get("postKey");
 	this.key = ko.observable(key);
 	this.postKey = ko.observable(postKey);
+	this.messagePostedCallback = this.messagePostedCallback.bind(this);
+    }
+
+    messagePostedCallback(message) {
+	alert('Message posted: ' + JSON.stringify(message));
     }
 }
 
