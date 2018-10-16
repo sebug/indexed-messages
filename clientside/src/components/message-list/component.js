@@ -14,6 +14,12 @@ class ViewModel {
 	
 	this.getData = this.getData.bind(this);
 
+	this.messagePosted = this.messagePosted.bind(this);
+
+	if (params.registerMessagePostedListener) {
+	    params.registerMessagePostedListener(this.messagePosted);
+	}
+
 	setTimeout(() => {
 	    this.getData();
 	}, 0);
@@ -26,6 +32,11 @@ class ViewModel {
 	if (responseModel) {
 	    this.messages(responseModel);
 	}
+    }
+
+    messagePosted(message) {
+	console.log(message);
+	console.log('from subcomponent');
     }
 }
 

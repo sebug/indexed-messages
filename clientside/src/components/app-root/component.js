@@ -13,10 +13,21 @@ class ViewModel {
 	this.key = ko.observable(key);
 	this.postKey = ko.observable(postKey);
 	this.messagePostedCallback = this.messagePostedCallback.bind(this);
+	this.registerMessagePostedListener = this.registerMessagePostedListener.bind(this);
+	this.messagePostedListeners = [];
     }
 
     messagePostedCallback(message) {
 	alert('Message posted: ' + JSON.stringify(message));
+	if (this.messagePostedListeners) {
+	    this.messagePostedListeners.forEach(l => {
+		l(message);
+	    });
+	}
+    }
+
+    registerMessagePostedListener(listener) {
+	this.messagePostedListeners.push(listener);
     }
 }
 
