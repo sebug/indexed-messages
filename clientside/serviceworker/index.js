@@ -80,6 +80,7 @@ function storeFullResultsInIndexedDB(messages) {
 }
 
 function cacheAndIndexedDBStrategy(e) {
+	let clonedRequest = e.request.clone();
     e.respondWith(fetch(e.request)
 		  .then(function (response) {
 		      if(!response || response.status !== 200 || response.type !== 'basic') {
@@ -89,6 +90,8 @@ function cacheAndIndexedDBStrategy(e) {
 		      let responseToCache = response.clone();
 		      if (e.request.url.indexOf('/GetMessagesTrigger') >= 0) {
 			  responseToCache.json().then(storeFullResultsInIndexedDB);
+		      } else if (e.request.url.indexOf('/NewMessage') >= 0) {
+			  console.log(clonedRequest);
 		      }
 
 		      return response;
