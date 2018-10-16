@@ -18,7 +18,7 @@
 	    },
 	    "backendUri": "https://indexedmessages.blob.core.windows.net/indexedmessagesstatic/build.js"
 	},
-	"polyfill": {
+	"polyfillmin": {
 	    "matchCondition": {
 		"methods": [
 		    "GET"
