@@ -50,7 +50,24 @@ function cacheThenNetworkStrategy(e) {
 	    }));
 }
 
+function cacheAndIndexedDBStrategy(e) {
+    e.respondWith(fetch(e.request)
+		  .then(function (response) {
+		      if(!response || response.status !== 200 || response.type !== 'basic') {
+			  return response;
+		      }
+
+		      let responseToCache = response.clone();
+
+		      return response;
+		  }));
+}
+
 // Deal with statically cached content
 self.addEventListener('fetch', function (e) {
-    cacheThenNetworkStrategy(e);
+    if (!e || !e.request || e.request.url.indexOf('/api') < 0) {
+	cacheThenNetworkStrategy(e);
+    } else {
+	cacheAndIndexedDBStrategy(e);
+    }
 });
