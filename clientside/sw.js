@@ -1,5 +1,5 @@
 // The service worker to be used for this sub-element.
-var CACHE_NAME = 'my-static-site-cache-v1.2';
+var CACHE_NAME = 'my-static-site-cache-v1.3';
 var DYNAMIC_CACHE_NAME = 'my-dynamic-site-cache';
 var urlsToCache = [
   '/',
