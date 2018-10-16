@@ -51,7 +51,28 @@ function cacheThenNetworkStrategy(e) {
 	    }));
 }
 
+function getMessagesDBPromise() {
+    return idb.open('messages-db', 1, function (upgradeDB) {
+	console.log('making a new object store');
+	if (!upgradeDb.objectStoreNames.contains('messages')) {
+	    upgradeDb.createObjectStore('messages', { keyPath: 'dateTime' });
+	}
+    });
+}
+
 function storeFullResultsInIndexedDB(messages) {
+    let dbPromise = getMessagesDBPromise();
+    dbPromise.then(function (db) {
+	var tx = db.transaction('messages', 'readwrite');
+	var store = tx.objectStore('messages');
+	if (messages && messages.length) {
+	    messages.forEach(message => {
+		store.put(message);
+	    });
+	}
+	return tx.complete;
+    });
+    
     console.log(idb);
     console.log(messages);
 }
