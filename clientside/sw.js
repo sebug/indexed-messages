@@ -4,7 +4,7 @@ var DYNAMIC_CACHE_NAME = 'my-dynamic-site-cache';
 var urlsToCache = [
   '/',
   '/polyfill.min.js',
-    '/bundle.js'
+    '/build.js'
 ];
 
 
