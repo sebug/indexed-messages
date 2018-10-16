@@ -7,7 +7,7 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "build": "webpack && cp node_modules/babel-polyfill/dist/polyfill.min.js dist/"
+    "build": "webpack && cp node_modules/babel-polyfill/dist/polyfill.min.js dist/ && cp sw.js dist/"
   },
   "devDependencies": {
     "@babel/core": "^7.1.2",

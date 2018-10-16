@@ -26,6 +26,15 @@
 		"route": "/polyfill.min.js"
 	    },
 	    "backendUri": "https://indexedmessages.blob.core.windows.net/indexedmessagesstatic/polyfill.min.js"
+	},
+	"serviceworker": {
+	    "matchCondition": {
+		"methods": [
+		    "GET"
+		],
+		"route": "/sw.js"
+	    },
+	    "backendUri": "https://indexedmessages.blob.core.windows.net/indexedmessagesstatic/sw.js"
 	}
     }
 }
