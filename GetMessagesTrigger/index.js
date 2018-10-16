@@ -10,7 +10,7 @@ module.exports = function (context, req) {
 	if (!error) {
 	    let entries = result.entries.map(row => {
 		return {
-		    date: row.RowKey._,
+		    dateTime: row.RowKey._,
 		    from: row.From._,
 		    to: row.To._,
 		    message: row.Message._
