@@ -1,4 +1,5 @@
-<fieldset class="message-edit">
+<form class="message-edit" data-bind="submit: postMessage">
+<fieldset>
   <legend>
     <h3>New Message</h3>
   </legend>
@@ -12,5 +13,6 @@
     </textarea>
   </label>
   <!-- /ko -->
-  <button data-bind="click: postMessage">Post</button>
+  <button type="submit">Post</button>
 </fieldset>
+</form>
