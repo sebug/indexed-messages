@@ -50,6 +50,10 @@ function cacheThenNetworkStrategy(e) {
 	    }));
 }
 
+function storeFullResultsInIndexedDB(messages) {
+    console.log(messages);
+}
+
 function cacheAndIndexedDBStrategy(e) {
     e.respondWith(fetch(e.request)
 		  .then(function (response) {
@@ -58,6 +62,9 @@ function cacheAndIndexedDBStrategy(e) {
 		      }
 
 		      let responseToCache = response.clone();
+		      if (e.request.url.indexOf('/GetMessagesTrigger') >= 0) {
+			  responseToCache.json().then(storeFullResultsInIndexedDB);
+		      }
 
 		      return response;
 		  }));
