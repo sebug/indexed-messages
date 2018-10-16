@@ -12,6 +12,11 @@ class ViewModel {
 	this.postMessage = this.postMessage.bind(this);
 	this.postToMessageTrigger = this.postToMessageTrigger.bind(this);
 	this.successCallback = params.successCallback;
+	this.fillFromDate = this.fillFromDate.bind(this);
+    }
+
+    fillFromDate() {
+	console.log('Should fill from date');
     }
 
     postMessage() {
