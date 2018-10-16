@@ -1,0 +1,10 @@
+{
+    "short_name": "IndMessages",
+    "name": "Indexed Messages",
+    "icons": [
+    ],
+    "start_url": "/",
+    "theme_color": "#FFFFFF",
+    "background_color": "#FFFFFF",
+    "display": "standalone"
+}

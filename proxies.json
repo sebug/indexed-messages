@@ -35,6 +35,15 @@
 		"route": "/sw.js"
 	    },
 	    "backendUri": "https://indexedmessages.blob.core.windows.net/indexedmessagesstatic/sw.js"
+	},
+	"manifest": {
+	    "matchCondition": {
+		"methods": [
+		    "GET"
+		],
+		"route": "/manifest.json"
+	    },
+	    "backendUri": "https://indexedmessages.blob.core.windows.net/indexedmessagesstatic/manifest.json"
 	}
     }
 }
