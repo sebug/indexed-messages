@@ -13,6 +13,12 @@ class ViewModel {
 	this.postToMessageTrigger = this.postToMessageTrigger.bind(this);
 	this.successCallback = params.successCallback;
 	this.fillFromDate = this.fillFromDate.bind(this);
+	this.fromDateHasFocus = ko.observable(false);
+	this.fromDateHasFocus.subscribe(hf => {
+	    if (hf) {
+		this.fillFromDate();
+	    }
+	});
     }
 
     fillFromDate() {
