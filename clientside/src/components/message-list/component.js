@@ -37,7 +37,7 @@ class ViewModel {
     messagePosted(message) {
 	if (message) {
 	    let messagesAfter = this.messages().concat([message]);
-	    this.messages(messagesAfter());
+	    this.messages(messagesAfter);
 	}
     }
 }
