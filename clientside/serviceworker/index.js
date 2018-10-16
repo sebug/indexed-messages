@@ -79,6 +79,18 @@ function storeFullResultsInIndexedDB(messages) {
     console.log(messages);
 }
 
+function storeIndividualMessageInIndexedDB(message) {
+    let dbPromise = getMessagesDBPromise();
+    dbPromise.then(function (db) {
+	var tx = db.transaction('messages', 'readwrite');
+	var store = tx.objectStore('messages');
+	store.put(message);
+	return tx.complete;
+    }, function (err) {
+	console.log(err);
+    });
+}
+
 function cacheAndIndexedDBStrategy(e) {
 	let clonedRequest = e.request.clone();
     e.respondWith(fetch(e.request)
@@ -91,7 +103,7 @@ function cacheAndIndexedDBStrategy(e) {
 		      if (e.request.url.indexOf('/GetMessagesTrigger') >= 0) {
 			  responseToCache.json().then(storeFullResultsInIndexedDB);
 		      } else if (e.request.url.indexOf('/NewMessage') >= 0) {
-			  console.log(clonedRequest);
+			  clonedRequest.json().then(storeIndividualMessageInIndexedDB);
 		      }
 
 		      return response;
