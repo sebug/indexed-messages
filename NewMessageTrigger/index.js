@@ -19,8 +19,10 @@ module.exports = function (context, req) {
 	    };
 	    context.done();
 	} else {
+	    context.log(JSON.stringify(error));
 	    context.res = {
-		body: "Error"
+		status: 400,
+		body: "Error inserting entity"
 	    };
 	    context.done();
 	}
