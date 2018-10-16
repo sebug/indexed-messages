@@ -9,7 +9,9 @@ class ViewModel {
     constructor(params) {
 	let sps = (new URL(document.location)).searchParams;
 	let key = sps.get("key");
+	let postKey = sps.get("postKey");
 	this.key = ko.observable(key);
+	this.postKey = ko.observable(postKey);
     }
 }
 
