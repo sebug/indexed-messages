@@ -48,8 +48,9 @@ class ViewModel {
 	    dayString + ' ' + hourString + ':' +
 	    minuteString + ':' + secondString;
 	    
-	    
-	console.log(dateString);
+	if (!this.message().dateTime()) {
+	    this.message().dateTime(dateString);
+	}
     }
 
     postMessage() {
