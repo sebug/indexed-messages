@@ -5,7 +5,7 @@ module.exports = function (context, req) {
     let entGen = azure.TableUtilities.entityGenerator;
     context.log(JSON.stringify(req.body));
     let entity = {
-	partitionKey: entGen.String('prod'),
+	PartitionKey: entGen.String('prod'),
 	RowKey: entGen.String(req.body.dateTime),
 	From: entGen.String(req.body.from),
 	To: entGen.String(req.body.to),
