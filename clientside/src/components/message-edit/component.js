@@ -57,7 +57,7 @@ class ViewModel {
 	console.log(this.message().message());
 	this.postToMessageTrigger(ko.toJS(this.message())).then(res => {
 	    if (this.successCallback) {
-		this.successCallback(res);
+		this.successCallback(new Message(res));
 		this.message(new Message({}));
 	    }
 	});
