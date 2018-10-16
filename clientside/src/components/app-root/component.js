@@ -18,7 +18,6 @@ class ViewModel {
     }
 
     messagePostedCallback(message) {
-	alert('Message posted: ' + JSON.stringify(message));
 	if (this.messagePostedListeners) {
 	    this.messagePostedListeners.forEach(l => {
 		l(message);

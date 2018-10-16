@@ -35,8 +35,10 @@ class ViewModel {
     }
 
     messagePosted(message) {
-	console.log(message);
-	console.log('from subcomponent');
+	if (message) {
+	    let messagesAfter = this.messages().concat([message]);
+	    this.messages(messagesAfter());
+	}
     }
 }
 
