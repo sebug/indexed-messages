@@ -1,7 +1,9 @@
 import ko from 'knockout';
 import htmlContent from './component.html';
 import messageList from '../message-list/component.js';
+import messageEdit from '../message-edit/component.js';
 ko.components.register('message-list', messageList);
+ko.components.register('message-edit', messageEdit);
 
 class ViewModel {
     constructor(params) {
