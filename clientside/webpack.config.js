@@ -28,6 +28,7 @@ let serviceWorkerConfig = {
     optimization: {
 	minimize: false
     },
+    devtool: false,
     entry: path.join(__dirname, '/serviceworker/index.js'),
     output: {
         filename: 'sw.js',
@@ -35,7 +36,7 @@ let serviceWorkerConfig = {
     module:{
         rules:[{
            test: /\.js$/,
-           exclude: /node_modules/
+            exclude: /node_modules/
         }]
     }
 };
