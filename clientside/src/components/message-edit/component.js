@@ -22,7 +22,34 @@ class ViewModel {
     }
 
     fillFromDate() {
-	console.log('Should fill from date');
+	let d = new Date();
+	let monthString = '' + (d.getMonth() + 1);
+	if (monthString.length === 1) {
+	    monthString = '0' + monthString;
+	}
+	let dayString = '' + d.getDate();
+	if (dayString.length === 1) {
+	    dayString = '0' + dayString;
+	}
+	let hourString = '' + d.getHours();
+	if (hourString.length === 1) {
+	    hourString = '0' + hourString;
+	}
+	let minuteString = '' + d.getMinutes();
+	if (minuteString.length === 1) {
+	    minuteString = '0' + minuteString;
+	}
+	let secondString = '' + d.getSeconds();
+	if (secondString.length === 1) {
+	    secondString = '0' + secondString;
+	}
+	let dateString = d.getFullYear() + '-' +
+	    monthString + '-' +
+	    dayString + ' ' + hourString + ':' +
+	    minuteString + ':' + secondString;
+	    
+	    
+	console.log(dateString);
     }
 
     postMessage() {
