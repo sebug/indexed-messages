@@ -25,7 +25,6 @@ function cacheThenNetworkStrategy(e) {
     e.respondWith(
 	caches.match(e.request)
 	    .then(function (response) {
-		console.log(e.request);
 		if (response && e.request.url.indexOf('/api') < 0) {
 		    return response;
 		}
@@ -53,6 +52,7 @@ function cacheThenNetworkStrategy(e) {
 }
 
 function storeFullResultsInIndexedDB(messages) {
+    console.log(idb);
     console.log(messages);
 }
 
