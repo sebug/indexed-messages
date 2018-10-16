@@ -52,7 +52,7 @@ function cacheThenNetworkStrategy(e) {
 }
 
 function getMessagesDBPromise() {
-    return idb.open('messages-db', 1, function (upgradeDB) {
+    return idb.open('messages-db', 2, function (upgradeDB) {
 	console.log('making a new object store');
 	if (!upgradeDB.objectStoreNames.contains('messages')) {
 	    upgradeDB.createObjectStore('messages', { keyPath: 'dateTime' });
