@@ -11,7 +11,7 @@ function getOrSetOnCookie(propertyName, value) {
 	
 	date.setTime(date + (365 * 86400000)); //24 * 60 * 60 * 1000
 	document.cookie = propertyName + '=' + value + '; expires=' +
-	    date.toGMTString();
+	    date.toUTCString() + '; path=/';
     } else {
 	try {
 	    value = document.cookie.split(';').map(kvp => { let firstIdx = kvp.indexOf('='); return { key: kvp.substring(0, firstIdx).trim(), value: kvp.substring(firstIdx + 1).trim() } }).filter(o => o.key === propertyName).map(o => o.value)[0];
