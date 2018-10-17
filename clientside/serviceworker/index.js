@@ -27,6 +27,10 @@ function storeInDynamicCache(request, responseToCache) {
 	});
 }
 
+function isInvalidResponse(response) {
+    return !response || response.status !== 200 || response.type !== 'basic';
+}
+
 function cacheThenNetworkStrategy(e) {
     e.respondWith(
 	caches.match(e.request)
@@ -39,14 +43,13 @@ function cacheThenNetworkStrategy(e) {
 		var fetchRequest = e.request.clone();
 		return fetch(fetchRequest).then(function (response) {
 		    // Check if we received a valid response
-		    if(!response || response.status !== 200 || response.type !== 'basic') {
+		    if(isInvalidResponse(response)) {
 			return response;
 		    }
 
 		    var responseToCache = response.clone();
 
 		    storeInDynamicCache(e.request, responseToCache);
-
 
 		    return response;
 		});
@@ -76,9 +79,6 @@ function storeFullResultsInIndexedDB(messages) {
     }, function (err) {
 	console.log(err);
     });
-    
-    console.log(idb);
-    console.log(messages);
 }
 
 function storeIndividualMessageInIndexedDB(message) {
@@ -97,7 +97,7 @@ function cacheAndIndexedDBStrategy(e) {
 	let clonedRequest = e.request.clone();
     e.respondWith(fetch(e.request)
 		  .then(function (response) {
-		      if(!response || response.status !== 200 || response.type !== 'basic') {
+		      if(isInvalidResponse(response)) {
 			  return response;
 		      }
 
