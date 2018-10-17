@@ -72,6 +72,17 @@ function getMessagesDBPromise() {
     });
 }
 
+function notifyFullMessages(messages) {
+    try {
+	self.clients.matchAll().then(all => all.map(client => client.postMessage({
+	    type: 'GetAllMessagesResponse',
+	    data: messages
+	})));
+    } catch (e) {
+	console.log(e);
+    }
+};
+
 function storeFullResultsInIndexedDB(messages) {
     let dbPromise = getMessagesDBPromise();
     dbPromise.then(function (db) {
@@ -82,6 +93,7 @@ function storeFullResultsInIndexedDB(messages) {
 		store.put(message);
 	    });
 	}
+	notifyFullMessages(messages);
 	return tx.complete;
     }, function (err) {
 	console.log(err);
