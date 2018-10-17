@@ -114,7 +114,8 @@ function storeIndividualMessageInIndexedDB(message) {
 
 function cacheAndIndexedDBStrategy(e) {
     let clonedRequest = e.request.clone();
-    if (e.request.url.indexOf('/GetMessagesTrigger') >= 0) {
+    if (e.request && e.request.url && e.request.url.indexOf('/GetMessagesTrigger') >= 0) {
+	console.log('go get messages');
 	getAllMessagesFromIndexedDB().then(messages => {
 	    console.log('Got all messages from DB, they are');
 	    console.log(messages);
@@ -130,7 +131,7 @@ function cacheAndIndexedDBStrategy(e) {
 
 			  return response;
 		      }));
-    } else if (e.request.url.indexOf('/NewMessage') >= 0) {
+    } else if (e.request && e.request.url && e.request.url.indexOf('/NewMessage') >= 0) {
 	e.respondWith(fetch(e.request)
 		      .then(function (response) {
 			  if(isInvalidResponse(response)) {
@@ -146,13 +147,6 @@ function cacheAndIndexedDBStrategy(e) {
 		      .then(function (response) {
 			  if(isInvalidResponse(response)) {
 			      return response;
-			  }
-
-			  let responseToCache = response.clone();
-			  if (e.request.url.indexOf('/GetMessagesTrigger') >= 0) {
-			      responseToCache.json().then(storeFullResultsInIndexedDB);
-			  } else if (e.request.url.indexOf('/NewMessage') >= 0) {
-			      clonedRequest.json().then(storeIndividualMessageInIndexedDB);
 			  }
 
 			  return response;
