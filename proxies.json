@@ -52,7 +52,7 @@
                 ],
                 "route": "/static/{*restOfPath}"
             },
-            "backendUri": "https://pwachallenge.blob.core.windows.net/indexedmessagestatic/{restOfPath}"
+            "backendUri": "https://indexedmessages.blob.core.windows.net/indexedmessagestatic/{restOfPath}"
         }
     }
 }
