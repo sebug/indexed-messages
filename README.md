@@ -21,3 +21,6 @@ You can access the website on https://indexedmessages.azurewebsites.net
 We will also need a storage table to store the messages we're receiving
 
 	az storage table create --name radioMessages
+
+## The role of IndexedDB
+Since we're creating a function app, sending the messages to be inserted into table storage may take some time. The goal is to already insert them in IndexedDB and not wait until the function is actually triggered. We'll have to call back when it fails, thoug.
