@@ -7,7 +7,11 @@ ko.components.register('message-edit', messageEdit);
 
 function getOrSetOnCookie(propertyName, value) {
     if (value) {
-	document.cookie = propertyName + '=' + value;
+	let date = new Date();
+	
+	date.setTime(date + (365 * 86400000)); //24 * 60 * 60 * 1000
+	document.cookie = propertyName + '=' + value + '; expires=' +
+	    date.toGMTString();
     } else {
 	try {
 	    value = document.cookie.split(';').map(kvp => { let firstIdx = kvp.indexOf('='); return { key: kvp.substring(0, firstIdx).trim(), value: kvp.substring(firstIdx + 1).trim() } }).filter(o => o.key === propertyName).map(o => o.value)[0];
