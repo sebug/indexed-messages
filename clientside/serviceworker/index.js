@@ -11,9 +11,9 @@ var urlsToCache = [
     '/static/icon_96x96.png',
     '/static/icon_192x192.png',
     '/static/icon_512x512.png',
-    '/static/touch-icon_152x152.png',
-    '/static/touch-icon_180x180.png',
-    '/static/touch-icon_167x167.png'
+    '/static/icon_152x152.png',
+    '/static/icon_180x180.png',
+    '/static/icon_167x167.png'
 ];
 
 
