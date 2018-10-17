@@ -24,7 +24,7 @@ class ViewModel {
 	    params.registerMessagePostedListener(this.messagePosted);
 	}
 
-	navigator.serviceWorker.addEventListener('message', function handler (event) {
+	navigator.serviceWorker.addEventListener('message', (event) => {
 	    if (event.data && event.data.type === 'GetAllMessagesResponse' &&
 	       event.data.data) {
 		console.log('got data from the service worker, updating messages observable');
