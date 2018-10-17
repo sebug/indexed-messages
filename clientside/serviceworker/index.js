@@ -116,21 +116,29 @@ function cacheAndIndexedDBStrategy(e) {
     let clonedRequest = e.request.clone();
     if (e.request && e.request.url && e.request.url.indexOf('/GetMessagesTrigger') >= 0) {
 	console.log('go get messages');
-	getAllMessagesFromIndexedDB().then(messages => {
-	    console.log('Got all messages from DB, they are');
-	    console.log(messages);
-	});
-	e.respondWith(fetch(e.request)
-		      .then(function (response) {
-			  if(isInvalidResponse(response)) {
-			      return response;
-			  }
+	e.respondWith(getAllMessagesFromIndexedDB().then(messages => {
+	    if (!messages) {
+		return fetch(e.request);
+	    } else {
+		let response = new Response(JSON.stringify(messages), {
+		    headers: { 'Content-Type': 'application/json' }
+		});
+		console.log('Creating our own response');
+		return response;
+	    }
+	}));
+	// Also, store the next version of the response in the IndexedDB
+	fetch(e.request)
+	    .then(function (response) {
+		if(isInvalidResponse(response)) {
+		    return response;
+		}
 
-			  let responseToCache = response.clone();
-			  responseToCache.json().then(storeFullResultsInIndexedDB);
+		let responseToCache = response.clone();
+		responseToCache.json().then(storeFullResultsInIndexedDB);
 
-			  return response;
-		      }));
+		return response;
+	    });
     } else if (e.request && e.request.url && e.request.url.indexOf('/NewMessage') >= 0) {
 	e.respondWith(fetch(e.request)
 		      .then(function (response) {
