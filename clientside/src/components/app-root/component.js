@@ -29,8 +29,6 @@ class ViewModel {
 	postKey = getOrSetOnCookie('postKey', postKey);
 	partition = getOrSetOnCookie('partition', partition);
 
-	console.log(key, postKey, partition);
-	
 	this.key = ko.observable(key);
 	this.postKey = ko.observable(postKey);
 	this.partition = ko.observable(partition);
