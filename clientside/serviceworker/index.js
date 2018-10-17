@@ -102,7 +102,7 @@ function getAllMessagesFromIndexedDB() {
 
 function storeIndividualMessageInIndexedDB(message) {
     let dbPromise = getMessagesDBPromise();
-    dbPromise.then(function (db) {
+    return dbPromise.then(function (db) {
 	var tx = db.transaction('messages', 'readwrite');
 	var store = tx.objectStore('messages');
 	store.put(message);
