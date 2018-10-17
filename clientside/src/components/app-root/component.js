@@ -9,7 +9,12 @@ function getOrSetOnCookie(propertyName, value) {
     if (value) {
 	document.cookie = propertyName + '=' + value;
     } else {
-	value = document.cookie.split(';').map(kvp => { let firstIdx = kvp.indexOf('='); return { key: kvp.substring(0, firstIdx).trim(), value: kvp.substring(firstIdx + 1).trim() } }).filter(o => o.key === propertyName).map(o => o.value)[0];
+	try {
+	    value = document.cookie.split(';').map(kvp => { let firstIdx = kvp.indexOf('='); return { key: kvp.substring(0, firstIdx).trim(), value: kvp.substring(firstIdx + 1).trim() } }).filter(o => o.key === propertyName).map(o => o.value)[0];
+	    console.log('value is ' + value);
+	} catch (e) {
+	    console.log(e);
+	}
     }
     return value;
 }
