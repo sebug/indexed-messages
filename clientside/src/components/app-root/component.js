@@ -56,21 +56,27 @@ class ViewModel {
 	this.messagePostedListeners = [];
 
 	if (!this.key() || !this.postKey() || !this.partition()) {
-	    caches.match('partition').then(response => {
-		return response.text();
-	    }).then(kt => {
-		this.partition(kt || this.partition());
-	    });
-	    caches.match('postKey').then(response => {
-		return response.text();
-	    }).then(kt => {
-		this.postKey(kt || this.postKey());
-	    });
-	    caches.match('key').then(response => {
-		return response.text();
-	    }).then(kt => {
-		this.key(kt || this.key());
-	    });
+	    alert("Don't have a partition");
+	    setTimeout(() => {
+		caches.match('partition').then(response => {
+		    return response.text();
+		}).then(kt => {
+		    alert("Setting partition to " + kt);
+		    this.partition(kt || this.partition());
+		}, err => {
+		    alert("Error getting partition " + err);
+		});
+		caches.match('postKey').then(response => {
+		    return response.text();
+		}).then(kt => {
+		    this.postKey(kt || this.postKey());
+		});
+		caches.match('key').then(response => {
+		    return response.text();
+		}).then(kt => {
+		    this.key(kt || this.key());
+		});
+	    }, 0);
 	}
     }
 
