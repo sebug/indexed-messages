@@ -1,8 +1,8 @@
 // The service worker to be used for this sub-element.
 import idb from 'idb';
 
-var CACHE_NAME = 'my-static-site-cache-v1.17';
-var DYNAMIC_CACHE_NAME = 'my-dynamic-site-cache-1.17';
+var CACHE_NAME = 'my-static-site-cache-v1.18';
+var DYNAMIC_CACHE_NAME = 'my-dynamic-site-cache-1.18';
 var urlsToCache = [
   '/',
   '/polyfill.min.js',
