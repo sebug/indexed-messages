@@ -24,3 +24,8 @@ We will also need a storage table to store the messages we're receiving
 
 ## The role of IndexedDB
 Since we're creating a function app, sending the messages to be inserted into table storage may take some time. The goal is to already insert them in IndexedDB and not wait until the function is actually triggered. We'll have to call back when it fails, though. The background sync API is currently only supported in Chrome, so I'd store the requests in some failed message DB and allow the user to send them again at an opportune time.
+
+# Passing data during add to home screen
+Currently, iOS only has very dodgy support for PWAs. One thing that's quite
+limiting is that when we're adding to home screen then the saved keys (which
+we take from the initial URL) are not taken over. Therefore, we try to accomplish this with an additional cache. Let's see whether that works.
