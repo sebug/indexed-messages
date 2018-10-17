@@ -44,6 +44,15 @@
 		"route": "/manifest.json"
 	    },
 	    "backendUri": "https://indexedmessages.blob.core.windows.net/indexedmessagesstatic/manifest.json"
-	}
+	},
+	"otherFiles": {
+            "matchCondition": {
+                "methods": [
+                    "GET"
+                ],
+                "route": "/static/{*restOfPath}"
+            },
+            "backendUri": "https://pwachallenge.blob.core.windows.net/indexedmessagestatic/{restOfPath}"
+        }
     }
 }
