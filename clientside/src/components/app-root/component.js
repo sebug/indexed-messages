@@ -9,7 +9,7 @@ function getOrSetOnCookie(propertyName, value) {
     if (value) {
 	let date = new Date();
 	
-	date.setTime(date + (365 * 86400000)); //24 * 60 * 60 * 1000
+	date.setTime(date.getTime() + (365 * 24 * 60 * 60 * 1000));
 	document.cookie = propertyName + '=' + value + '; expires=' +
 	    date.toUTCString() + '; path=/';
     } else {
