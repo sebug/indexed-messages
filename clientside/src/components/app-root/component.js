@@ -5,11 +5,11 @@ import messageEdit from '../message-edit/component.js';
 ko.components.register('message-list', messageList);
 ko.components.register('message-edit', messageEdit);
 
-function getOrSetInLocalStorage(propertyName, value) {
+function getOrSetOnCookie(propertyName, value) {
     if (value) {
-	localStorage.setItem(propertyName, value);
+	document.cookie = propertyName + '=' + value;
     } else {
-	value = localStorage.getItem(propertyName);
+	value = document.cookie.split(';').map(kvp => { let firstIdx = kvp.indexOf('='); return { key: kvp.substring(0, firstIdx).trim(), value: kvp.substring(firstIdx + 1).trim() } }).filter(o => o.key === propertyName).map(o => o.value)[0];
     }
     return value;
 }
@@ -20,9 +20,9 @@ class ViewModel {
 	let key = sps.get("key");
 	let postKey = sps.get("postKey");
 	let partition = sps.get("partition");
-	key = getOrSetInLocalStorage('key', key);
-	postKey = getOrSetInLocalStorage('postKey', postKey);
-	partition = getOrSetInLocalStorage('partition', partition);
+	key = getOrSetOnCookie('key', key);
+	postKey = getOrSetOnCookie('postKey', postKey);
+	partition = getOrSetOnCookie('partition', partition);
 
 	console.log(key, postKey, partition);
 	
