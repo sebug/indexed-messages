@@ -91,7 +91,7 @@ function storeFullResultsInIndexedDB(messages) {
 function getAllMessagesFromIndexedDB() {
     let dbPromise = getMessagesDBPromise();
     return dbPromise.then(function (db) {
-	var tx = db.transaction('messages', 'read');
+	var tx = db.transaction('messages');
 	var store = tx.objectStore('messages');
 	return store.getAll();
     }, function (err) {
