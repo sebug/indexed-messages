@@ -54,6 +54,24 @@ class ViewModel {
 	this.messagePostedCallback = this.messagePostedCallback.bind(this);
 	this.registerMessagePostedListener = this.registerMessagePostedListener.bind(this);
 	this.messagePostedListeners = [];
+
+	if (!this.key() || !this.postKey() || !this.partition()) {
+	    caches.match('partition').then(response => {
+		return response.text();
+	    }).then(kt => {
+		this.partition(kt || this.partition());
+	    });
+	    caches.match('postKey').then(response => {
+		return response.text();
+	    }).then(kt => {
+		this.postKey(kt || this.postKey());
+	    });
+	    caches.match('key').then(response => {
+		return response.text();
+	    }).then(kt => {
+		this.key(kt || this.key());
+	    });
+	}
     }
 
     messagePostedCallback(message) {

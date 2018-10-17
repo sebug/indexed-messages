@@ -1,3 +1,13 @@
+<!-- ko if: key -->
 <message-list params="key: key, registerMessagePostedListener: registerMessagePostedListener, partition: partition"></message-list>
+<!-- /ko -->
+<!-- ko ifnot: key -->
+<p>Loading message list...</p>
+<!-- /ko -->
 
+<!-- ko if: postKey -->
 <message-edit params="key: postKey, successCallback: messagePostedCallback, partition: partition"></message-edit>
+<!-- /ko -->
+<!-- ko ifnot: postKey -->
+<p>New Message creation not yet available.</p>
+<!-- /ko -->
