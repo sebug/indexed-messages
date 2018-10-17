@@ -5,11 +5,11 @@
     </legend>
     <!-- ko with: message -->
     <div class="date-time-input">
-      <label>Date/Time <input name="datetime" data-bind="value: dateTime">
+      <label>Date/Time <input name="datetime" data-bind="value: dateTime, hasFocus: $parent.fromDateHasFocus">
       </label>
     </div>
     <div class="from-input">
-      <label>From <input name="from" data-bind="value: from, hasFocus: $parent.fromDateHasFocus"></label>
+      <label>From <input name="from" data-bind="value: from"></label>
     </div>
     <div class="to-input">
       <label>To <input name="to" data-bind="value: to"></label>
