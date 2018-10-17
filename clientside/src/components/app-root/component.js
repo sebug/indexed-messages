@@ -33,6 +33,21 @@ class ViewModel {
 	postKey = getOrSetOnCookie('postKey', postKey);
 	partition = getOrSetOnCookie('partition', partition);
 
+	// Also, set them in the information cache
+	if (window.caches) {
+	    window.caches.open('INFORMATION').then(cache => {
+		if (key) {
+		    cache.put('key', new Response(key));
+		}
+		if (postKey) {
+		    cache.put('postKey', new Response(key));
+		}
+		if (partition) {
+		    cache.put('partition', new Response(key));
+		}
+	    });
+	}
+
 	this.key = ko.observable(key);
 	this.postKey = ko.observable(postKey);
 	this.partition = ko.observable(partition);
