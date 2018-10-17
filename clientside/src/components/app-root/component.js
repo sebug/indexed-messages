@@ -37,11 +37,6 @@ class ViewModel {
 	this.messagePostedCallback = this.messagePostedCallback.bind(this);
 	this.registerMessagePostedListener = this.registerMessagePostedListener.bind(this);
 	this.messagePostedListeners = [];
-
-	navigator.serviceWorker.addEventListener('message', function handler (event) {
-	    console.log('got data from the service worker');
-	    console.log(event.data);
-	});
     }
 
     messagePostedCallback(message) {
