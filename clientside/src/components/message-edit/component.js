@@ -8,6 +8,10 @@ class ViewModel {
 	if (typeof this.key !== 'function') {
 	    this.key = ko.observable(this.key);
 	}
+	this.partition = params.partition;
+	if (typeof this.partition !== 'function') {
+	    this.partition = ko.observable(this.partition);
+	}
 	this.message = ko.observable(new Message({}));
 	this.postMessage = this.postMessage.bind(this);
 	this.postToMessageTrigger = this.postToMessageTrigger.bind(this);
@@ -65,7 +69,8 @@ class ViewModel {
     }
 
     async postToMessageTrigger(obj) {
-	let res = await fetch('/api/NewMessageTrigger?code=' + this.key(), {
+	let res = await fetch('/api/NewMessageTrigger?code=' + this.key() +
+			      '&partition=' + this.partition(), {
         method: "POST", // *GET, POST, PUT, DELETE, etc.
         cache: "no-cache",
         credentials: "same-origin",

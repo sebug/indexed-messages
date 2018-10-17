@@ -7,8 +7,12 @@ class ViewModel {
 	if (typeof this.key !== 'function') {
 	    this.key = ko.observable(this.key);
 	}
+	this.partition = params.partition;
+	if (typeof this.partition !== 'function') {
+	    this.partition = ko.observable(this.partition);
+	}
 
-	console.log('The key in the sub component is ' + this.key());
+	console.log('the partition is ' + this.partition());
 
 	this.messages = ko.observableArray([]);
 	
@@ -26,7 +30,9 @@ class ViewModel {
     }
 
     async getData() {
-	let response = await fetch('/api/GetMessagesTrigger?code=' + this.key());
+	let response = await fetch('/api/GetMessagesTrigger?code=' +
+				   this.key() + '&partition=' +
+				   this.partition());
 	let responseModel = await response.json();
 
 	if (responseModel) {

@@ -3,7 +3,11 @@ let azure = require('azure-storage');
 module.exports = function (context, req) {
     let tableService = azure.createTableService();
     let entGen = azure.TableUtilities.entityGenerator;
-    context.log(JSON.stringify(req.body));
+
+    let partition = req.query.partition || 'prod';
+
+    context.log('Partition is ' + partition);
+    
     let entity = {
 	PartitionKey: entGen.String('prod'),
 	RowKey: entGen.String(req.body.dateTime),

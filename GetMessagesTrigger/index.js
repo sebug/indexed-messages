@@ -2,6 +2,11 @@ let azure = require('azure-storage');
 
 module.exports = function (context, req) {
     let tableService = azure.createTableService();
+
+    let partition = req.query.partition || 'prod';
+
+    context.log('Partition is ' + partition);
+    
     let query = new azure.TableQuery()
 	.top(100)
 	.where('PartitionKey eq ?', 'prod');

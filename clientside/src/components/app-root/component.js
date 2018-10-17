@@ -10,8 +10,10 @@ class ViewModel {
 	let sps = (new URL(document.location)).searchParams;
 	let key = sps.get("key");
 	let postKey = sps.get("postKey");
+	let partition = sps.get("partition");
 	this.key = ko.observable(key);
 	this.postKey = ko.observable(postKey);
+	this.partition = ko.observable(partition);
 	this.messagePostedCallback = this.messagePostedCallback.bind(this);
 	this.registerMessagePostedListener = this.registerMessagePostedListener.bind(this);
 	this.messagePostedListeners = [];
