@@ -88,6 +88,18 @@ function storeFullResultsInIndexedDB(messages) {
     });
 }
 
+function getAllMessagesFromIndexedDB() {
+    let dbPromise = getMessagesDBPromise();
+    return dbPromise.then(function (db) {
+	var tx = db.transaction('messages', 'read');
+	var store = tx.objectStore('messages');
+	return store.getAll();
+    }, function (err) {
+	console.log(err);
+	return null;
+    });
+}
+
 function storeIndividualMessageInIndexedDB(message) {
     let dbPromise = getMessagesDBPromise();
     dbPromise.then(function (db) {
@@ -101,22 +113,51 @@ function storeIndividualMessageInIndexedDB(message) {
 }
 
 function cacheAndIndexedDBStrategy(e) {
-	let clonedRequest = e.request.clone();
-    e.respondWith(fetch(e.request)
-		  .then(function (response) {
-		      if(isInvalidResponse(response)) {
-			  return response;
-		      }
+    let clonedRequest = e.request.clone();
+    if (e.request.url.indexOf('/GetMessagesTrigger') >= 0) {
+	getAllMessagesFromIndexedDB().then(messages => {
+	    console.log('Got all messages from DB, they are');
+	    console.log(messages);
+	});
+	e.respondWith(fetch(e.request)
+		      .then(function (response) {
+			  if(isInvalidResponse(response)) {
+			      return response;
+			  }
 
-		      let responseToCache = response.clone();
-		      if (e.request.url.indexOf('/GetMessagesTrigger') >= 0) {
+			  let responseToCache = response.clone();
 			  responseToCache.json().then(storeFullResultsInIndexedDB);
-		      } else if (e.request.url.indexOf('/NewMessage') >= 0) {
-			  clonedRequest.json().then(storeIndividualMessageInIndexedDB);
-		      }
 
-		      return response;
-		  }));
+			  return response;
+		      }));
+    } else if (e.request.url.indexOf('/NewMessage') >= 0) {
+	e.respondWith(fetch(e.request)
+		      .then(function (response) {
+			  if(isInvalidResponse(response)) {
+			      return response;
+			  }
+
+			  let responseToCache = response.clone();
+			  clonedRequest.json().then(storeIndividualMessageInIndexedDB);
+			  return response;
+		      }));
+    } else {
+	e.respondWith(fetch(e.request)
+		      .then(function (response) {
+			  if(isInvalidResponse(response)) {
+			      return response;
+			  }
+
+			  let responseToCache = response.clone();
+			  if (e.request.url.indexOf('/GetMessagesTrigger') >= 0) {
+			      responseToCache.json().then(storeFullResultsInIndexedDB);
+			  } else if (e.request.url.indexOf('/NewMessage') >= 0) {
+			      clonedRequest.json().then(storeIndividualMessageInIndexedDB);
+			  }
+
+			  return response;
+		      }));
+    }
 }
 
 // Deal with statically cached content
