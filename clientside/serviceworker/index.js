@@ -6,7 +6,14 @@ var DYNAMIC_CACHE_NAME = 'my-dynamic-site-cache';
 var urlsToCache = [
   '/',
   '/polyfill.min.js',
-    '/build.js'
+    '/build.js',
+    '/static/icon_48x48.png',
+    '/static/icon_96x96.png',
+    '/static/icon_192x192.png',
+    '/static/icon_512x512.png',
+    '/static/touch-icon_152x152.png',
+    '/static/touch-icon_180x180.png',
+    '/static/touch-icon_167x167.png'
 ];
 
 
