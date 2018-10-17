@@ -123,7 +123,6 @@ function cacheAndIndexedDBStrategy(e) {
 		let response = new Response(JSON.stringify(messages), {
 		    headers: { 'Content-Type': 'application/json' }
 		});
-		console.log('Creating our own response');
 		return response;
 	    }
 	}));
@@ -140,16 +139,23 @@ function cacheAndIndexedDBStrategy(e) {
 		return response;
 	    });
     } else if (e.request && e.request.url && e.request.url.indexOf('/NewMessage') >= 0) {
-	e.respondWith(fetch(e.request)
-		      .then(function (response) {
+	e.respondWith(clonedRequest.json().then(message => {
+	    return storeIndividualMessageInIndexedDB(message).then((transactionState) => {
+		return new Response(JSON.stringify(message), { headers: { 'Content-Type': 'application/json' } });
+	    });
+	}));
+	// Also perform the actual fetch request to store the message
+	// TODO: error handling for offline
+	fetch(e.request)
+		   .then(function (response) {
 			  if(isInvalidResponse(response)) {
 			      return response;
 			  }
 
 			  let responseToCache = response.clone();
-			  clonedRequest.json().then(storeIndividualMessageInIndexedDB);
+			  
 			  return response;
-		      }));
+		      });
     } else {
 	e.respondWith(fetch(e.request)
 		      .then(function (response) {
