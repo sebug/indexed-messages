@@ -1,7 +1,7 @@
 // The service worker to be used for this sub-element.
 import idb from 'idb';
 
-var CACHE_NAME = 'my-static-site-cache-v1.8';
+var CACHE_NAME = 'my-static-site-cache-v1.9';
 var DYNAMIC_CACHE_NAME = 'my-dynamic-site-cache';
 var urlsToCache = [
   '/',
@@ -14,12 +14,18 @@ self.addEventListener('install', function (e) {
     e.waitUntil(
 	caches.open(CACHE_NAME)
 	    .then(function (cache) {
-		console.log('Opened cache ' + CACHE_NAME);
 		return cache.addAll(urlsToCache);
 	    }, function (err) {
 		console.log('could not event open cache ' + CACHE_NAME);
 	    }));
 });
+
+function storeInDynamicCache(request, responseToCache) {
+    caches.open(DYNAMIC_CACHE_NAME)
+	.then(function(cache) {
+	    cache.put(request, responseToCache);
+	});
+}
 
 function cacheThenNetworkStrategy(e) {
     e.respondWith(
@@ -28,8 +34,6 @@ function cacheThenNetworkStrategy(e) {
 		if (response && e.request.url.indexOf('/api') < 0) {
 		    return response;
 		}
-
-		console.log('matched but did not find response, or response is stale');
 
 		// so that we can store both in cache and perform it
 		var fetchRequest = e.request.clone();
@@ -41,10 +45,8 @@ function cacheThenNetworkStrategy(e) {
 
 		    var responseToCache = response.clone();
 
-		    caches.open(DYNAMIC_CACHE_NAME)
-			.then(function(cache) {
-			    cache.put(e.request, responseToCache);
-			});
+		    storeInDynamicCache(e.request, responseToCache);
+
 
 		    return response;
 		});
