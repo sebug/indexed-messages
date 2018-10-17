@@ -40,10 +40,10 @@ class ViewModel {
 		    cache.put('key', new Response(key));
 		}
 		if (postKey) {
-		    cache.put('postKey', new Response(key));
+		    cache.put('postKey', new Response(postKey));
 		}
 		if (partition) {
-		    cache.put('partition', new Response(key));
+		    cache.put('partition', new Response(partition));
 		}
 	    });
 	}
@@ -61,7 +61,6 @@ class ViewModel {
 		caches.match('partition').then(response => {
 		    return response.text();
 		}).then(kt => {
-		    alert("Setting partition to " + kt);
 		    this.partition(kt || this.partition());
 		}, err => {
 		    alert("Error getting partition " + err);
