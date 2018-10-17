@@ -1,7 +1,7 @@
 // The service worker to be used for this sub-element.
 import idb from 'idb';
 
-var CACHE_NAME = 'my-static-site-cache-v1.11';
+var CACHE_NAME = 'my-static-site-cache-v1.12';
 var DYNAMIC_CACHE_NAME = 'my-dynamic-site-cache';
 var urlsToCache = [
   '/',
@@ -25,6 +25,17 @@ self.addEventListener('install', function (e) {
 	    }, function (err) {
 		console.log('could not event open cache ' + CACHE_NAME);
 	    }));
+
+    try {
+	// Delete old caches
+	let i;
+	for (i = 0; i < 12; i += 1) {
+	    let cacheKey = 'my-static-site-cache-v1.' + i;
+	    caches.delete(cacheKey);
+	}
+    } catch (e) {
+	console.log(e);
+    }
 });
 
 function storeInDynamicCache(request, responseToCache) {
