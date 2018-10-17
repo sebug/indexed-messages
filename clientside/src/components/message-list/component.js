@@ -12,8 +12,6 @@ class ViewModel {
 	    this.partition = ko.observable(this.partition);
 	}
 
-	console.log('the partition is ' + this.partition());
-
 	this.messages = ko.observableArray([]);
 	
 	this.getData = this.getData.bind(this);
