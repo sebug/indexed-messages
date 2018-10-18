@@ -1,8 +1,8 @@
 // The service worker to be used for this sub-element.
 import idb from 'idb';
 
-var CACHE_NAME = 'my-static-site-cache-v1.41';
-var DYNAMIC_CACHE_NAME = 'my-dynamic-site-cache-1.41';
+var CACHE_NAME = 'my-static-site-cache-v1.42';
+var DYNAMIC_CACHE_NAME = 'my-dynamic-site-cache-1.42';
 var urlsToCache = [
   '/',
   '/polyfill.min.js',
@@ -36,7 +36,7 @@ self.addEventListener('install', function (e) {
     try {
 	// Delete old caches
 	let i;
-	for (i = 0; i < 41; i += 1) {
+	for (i = 0; i < 42; i += 1) {
 	    let cacheKey = 'my-static-site-cache-v1.' + i;
 	    caches.delete(cacheKey);
 	    let dynamicCacheKey = 'my-dynamic-site-cache-1.' + i;
@@ -176,6 +176,29 @@ function storeFailedMessage(message) {
     });
 }
 
+function getAllFailedMessages() {
+    let dbPromise = getFailedMessagesDBPromiseDB();
+    return dbPromise.then(function (db) {
+	var tx = db.transaction('failedMessages');
+	var store = tx.objectStore('failedMessages');
+	return store.getAll();
+    }, function (err) {
+	console.log(err);
+	return null;
+    });
+}
+
+function notifyFailedMessages(messages) {
+    try {
+	self.clients.matchAll().then(all => all.map(client => client.postMessage({
+	    type: 'GetFailedMessagesResponse',
+	    data: messages
+	})));
+    } catch (e) {
+	console.log(e);
+    }
+};
+
 function cacheAndIndexedDBStrategy(e) {
     let clonedRequest = e.request.clone();
     if (e.request && e.request.url && e.request.url.indexOf('/GetMessagesTrigger') >= 0) {
@@ -250,4 +273,13 @@ self.addEventListener('fetch', function (e) {
     } else {
 	cacheAndIndexedDBStrategy(e);
     }
+});
+
+// Communicate with the clients
+self.addEventListener('message', function (event) {
+    console.log('Service Worker received message');
+    if (event.data == 'get-failed-messages') {
+	getFailedMessagesDBPromiseDB().then(notifyFailedMessages);
+    }
+    console.log(event.data);
 });

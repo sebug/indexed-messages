@@ -27,6 +27,11 @@ class ViewModel {
 		this.missedMessages(newMessages);
 	    });
 	}
+
+	// Also, load existing failed messages (on reload for example)
+	if (navigator && navigator.serviceWorker && navigator.serviceWorker.controller) {
+	    navigator.serviceWorker.controller.postMessage('get-failed-messages');
+	}
     }
 
     resynchronize() {
