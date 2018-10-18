@@ -1,8 +1,8 @@
 // The service worker to be used for this sub-element.
 import idb from 'idb';
 
-var CACHE_NAME = 'my-static-site-cache-v1.44';
-var DYNAMIC_CACHE_NAME = 'my-dynamic-site-cache-1.44';
+var CACHE_NAME = 'my-static-site-cache-v1.45';
+var DYNAMIC_CACHE_NAME = 'my-dynamic-site-cache-1.45';
 var urlsToCache = [
   '/',
   '/polyfill.min.js',
@@ -36,7 +36,7 @@ self.addEventListener('install', function (e) {
     try {
 	// Delete old caches
 	let i;
-	for (i = 0; i < 44; i += 1) {
+	for (i = 0; i < 45; i += 1) {
 	    let cacheKey = 'my-static-site-cache-v1.' + i;
 	    caches.delete(cacheKey);
 	    let dynamicCacheKey = 'my-dynamic-site-cache-1.' + i;
@@ -176,6 +176,18 @@ function storeFailedMessage(message) {
     });
 }
 
+function removeFailedMessage(dateTime) {
+    let dbPromise = getFailedMessagesDBPromiseDB();
+    return dbPromise.then(function (db) {
+	let tx = db.transaction('failedMessages', 'readwrite');
+	let store = tx.objectStore('failedMessages');
+	store.delete(dateTime);
+	return tx.complete;
+    }, function (err) {
+	console.log(err);
+    });
+}
+
 function getAllFailedMessages() {
     let dbPromise = getFailedMessagesDBPromiseDB();
     return dbPromise.then(function (db) {
@@ -244,6 +256,11 @@ function cacheAndIndexedDBStrategy(e) {
 		       }
 
 		       let responseToCache = response.clone();
+
+		       // we actually successfully inserted this message now. Remove it from the failed messages if it is there
+		       responseToCache.json().then(message => {
+			   removeFailedMessage(message.dateTime);
+		       });
 			  
 		       return response;
 		   }).then(null, err => {
