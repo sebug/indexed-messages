@@ -1,8 +1,8 @@
 // The service worker to be used for this sub-element.
 import idb from 'idb';
 
-var CACHE_NAME = 'my-static-site-cache-v1.27';
-var DYNAMIC_CACHE_NAME = 'my-dynamic-site-cache-1.27';
+var CACHE_NAME = 'my-static-site-cache-v1.28';
+var DYNAMIC_CACHE_NAME = 'my-dynamic-site-cache-1.28';
 var urlsToCache = [
   '/',
   '/polyfill.min.js',
@@ -36,7 +36,7 @@ self.addEventListener('install', function (e) {
     try {
 	// Delete old caches
 	let i;
-	for (i = 0; i < 27; i += 1) {
+	for (i = 0; i < 28; i += 1) {
 	    let cacheKey = 'my-static-site-cache-v1.' + i;
 	    caches.delete(cacheKey);
 	    let dynamicCacheKey = 'my-dynamic-site-cache-1.' + i;
@@ -102,6 +102,18 @@ function notifyFullMessages(messages) {
 	console.log(e);
     }
 };
+
+function notifyInsertionError(message, error) {
+    try {
+	self.clients.matchAll().then(all => all.map(client => client.postMessage({
+	    type: 'InsertionError',
+	    data: messages,
+	    error: error
+	})));
+    } catch (e) {
+	console.log(e);
+    }
+}
 
 function storeFullResultsInIndexedDB(messages) {
     let dbPromise = getMessagesDBPromise();
@@ -178,16 +190,25 @@ function cacheAndIndexedDBStrategy(e) {
 	}));
 	// Also perform the actual fetch request to store the message
 	// TODO: error handling for offline
+	let secondClonedRequest = e.request.clone();
 	fetch(e.request)
 		   .then(function (response) {
-			  if(isInvalidResponse(response)) {
-			      return response;
-			  }
+		       if(isInvalidResponse(response)) {
+			   return secondClonedRequest.json().then(message => {
+			       notifyInsertionError(message, "Invalid response: " + response.status);
+			       return new Response(JSON.stringify(message), { headers: { 'Content-Type': 'application/json' } });
+			   });
+		       }
 
-			  let responseToCache = response.clone();
+		       let responseToCache = response.clone();
 			  
-			  return response;
-		      });
+		       return response;
+		   }).catch(err => {
+		       return secondClonedRequest.json().then(message => {
+			   notifyInsertionError(message, err);
+			   return new Response(JSON.stringify(message), { headers: { 'Content-Type': 'application/json' } });
+		       });
+		   });
     } else {
 	e.respondWith(fetch(e.request)
 		      .then(function (response) {
