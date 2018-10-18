@@ -28,4 +28,9 @@ Since we're creating a function app, sending the messages to be inserted into ta
 # Passing data during add to home screen
 Currently, iOS only has very dodgy support for PWAs. One thing that's quite
 limiting is that when we're adding to home screen then the saved keys (which
-we take from the initial URL) are not taken over. Therefore, we try to accomplish this with an additional cache. Let's see whether that works.
+we take from the initial URL) are not taken over. I have thus added an initial configuration screen for that case. That works for the messages app, but for anything more that's really too much.
+
+# Offline
+If we try to insert a message while offline, we notify another component that this happens and let the user click on a synchronize button once they're back online (since background sync is not really an option).
+
+
