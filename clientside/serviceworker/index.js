@@ -1,8 +1,8 @@
 // The service worker to be used for this sub-element.
 import idb from 'idb';
 
-var CACHE_NAME = 'my-static-site-cache-v1.31';
-var DYNAMIC_CACHE_NAME = 'my-dynamic-site-cache-1.31';
+var CACHE_NAME = 'my-static-site-cache-v1.32';
+var DYNAMIC_CACHE_NAME = 'my-dynamic-site-cache-1.32';
 var urlsToCache = [
   '/',
   '/polyfill.min.js',
@@ -36,7 +36,7 @@ self.addEventListener('install', function (e) {
     try {
 	// Delete old caches
 	let i;
-	for (i = 0; i < 31; i += 1) {
+	for (i = 0; i < 32; i += 1) {
 	    let cacheKey = 'my-static-site-cache-v1.' + i;
 	    caches.delete(cacheKey);
 	    let dynamicCacheKey = 'my-dynamic-site-cache-1.' + i;
@@ -104,15 +104,14 @@ function notifyFullMessages(messages) {
 };
 
 function notifyInsertionError(message, error) {
-    try {
-	self.clients.matchAll().then(all => all.map(client => client.postMessage({
+    return self.clients.matchAll().then(all => all.map(client => {
+	let msg = {
 	    type: 'InsertionError',
 	    data: message,
 	    error: error
-	})));
-    } catch (e) {
-	console.log(e);
-    }
+	};
+	client.postMessage(msg);
+    }));
 }
 
 function storeFullResultsInIndexedDB(messages) {

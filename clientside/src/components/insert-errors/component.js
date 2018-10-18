@@ -11,6 +11,7 @@ class ViewModel {
 	this.missedMessages = ko.observableArray([]);
 
 	navigator.serviceWorker.addEventListener('message', (event) => {
+	    console.log('listening, received ' + event.data.type);
             if (event.data && event.data.type === 'InsertionError' &&
 		event.data.data) {
                 console.log('got data from the service worker about missed inserts.');
