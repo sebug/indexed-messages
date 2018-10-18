@@ -10,6 +10,10 @@ class ViewModel {
 
 	this.missedMessages = ko.observableArray([]);
 
+	this.resynchronize = this.resynchronize.bind(this);
+	this.postMessagesAgain = this.postMessagesAgain.bind(this);
+	this.postToMessageTrigger = this.postToMessageTrigger.bind(this);
+
 	if (params.addInsertionErrorCallback) {
 	    console.log('Add insertion error callback defined, setting one');
 	    params.addInsertionErrorCallback(data => {
@@ -19,6 +23,37 @@ class ViewModel {
 		this.missedMessages(newMessages);
 	    });
 	}
+    }
+
+    resynchronize() {
+	this.postMessagesAgain().then(completed => {
+	    this.missedMessages([]);
+	});
+    }
+
+    async postMessagesAgain() {
+	let postPromises = this.missedMessages().map(message => {
+	    return this.postToMessageTrigger(message);
+	});
+	let results = Promise.all(postPromises);
+	console.log(results);
+	return results;
+    }
+
+    async postToMessageTrigger(obj) {
+	let res = await fetch('/api/NewMessageTrigger?code=' + this.key() +
+			      '&partition=' + this.partition(), {
+        method: "POST", // *GET, POST, PUT, DELETE, etc.
+        cache: "no-cache",
+        credentials: "same-origin",
+        headers: {
+            "Content-Type": "application/json; charset=utf-8"
+        },
+        redirect: "follow", // manual, *follow, error
+        body: JSON.stringify(obj),
+	});
+	let resJson = await res.json();
+	return resJson;
     }
 }
 
