@@ -2,6 +2,40 @@ import ko from 'knockout';
 import htmlContent from './component.html';
 import Message from '../../models/Message.js';
 
+function getMessageDTOFromLocalStorage() {
+    let entity = {};
+
+    entity.dateTime = localStorage.getItem('message-dateTime');
+    entity.from = localStorage.getItem('message-from');
+    entity.to = localStorage.getItem('message-to');
+    entity.message = localStorage.getItem('message-message');
+
+    return entity;
+}
+
+function subscribeToStoreChangesToLocalStorage(model) {
+    model.dateTime.subscribe(newVal => {
+	localStorage.setItem('message-dateTime', newVal);
+    });
+    model.from.subscribe(newVal => {
+	localStorage.setItem('message-from');
+    });
+    model.to.subscribe(newVal => {
+	localStorage.setItem('message-to', newVal);
+    });
+    model.message.subscribe(newVal => {
+	localStorage.setItem('message-message', newVal);
+    });
+    return model;
+}
+
+function clearMessageLocalStorage() {
+    localStorage.removeItem('message-dateTime');
+    localStorage.removeItem('message-from');
+    localStorage.removeItem('message-to');
+    localStorage.removeItem('message-message');
+}
+
 class ViewModel {
     constructor(params) {
 	this.key = params.key;
@@ -12,7 +46,8 @@ class ViewModel {
 	if (typeof this.partition !== 'function') {
 	    this.partition = ko.observable(this.partition);
 	}
-	this.message = ko.observable(new Message({}));
+	this.message = ko.observable(new Message(getMessageDTOFromLocalStorage()));
+	subscribeToStoreChangesToLocalStorage(this.message());
 	this.postMessage = this.postMessage.bind(this);
 	this.postToMessageTrigger = this.postToMessageTrigger.bind(this);
 	this.successCallback = params.successCallback;
@@ -63,6 +98,8 @@ class ViewModel {
 	    if (this.successCallback) {
 		this.successCallback(new Message(res));
 		this.message(new Message({}));
+		clearMessageLocalStorage();
+		subscribeToStoreChangesToLocalStorage(this.message());
 	    }
 	});
 	return false;

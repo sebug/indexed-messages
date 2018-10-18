@@ -1,17 +1,17 @@
 <form class="message-edit" data-bind="submit: postMessage">
   <fieldset>
     <legend>
-      <h3>New Message</h3>
+      <h3>Nouveau Message</h3>
     </legend>
     <!-- ko with: message -->
     <div class="date-time-input">
-      <label for="datetime">Date/Time:</label> <input name="datetime" id="datetime" data-bind="value: dateTime, hasFocus: $parent.fromDateHasFocus">
+      <label for="datetime">Date/Heure:</label> <input name="datetime" id="datetime" data-bind="value: dateTime, hasFocus: $parent.fromDateHasFocus">
     </div>
     <div class="from-input">
-      <label for="from">From:</label> <input name="from" id="from" data-bind="value: from">
+      <label for="from">De:</label> <input name="from" id="from" data-bind="value: from">
     </div>
     <div class="to-input">
-      <label for="to">To:</label> <input name="to" id="to" data-bind="value: to">
+      <label for="to">À:</label> <input name="to" id="to" data-bind="value: to">
     </div>
     <div class="message-input">
       <label for="message">Message:</label>
@@ -19,6 +19,6 @@
 	</textarea>
     </div>
   <!-- /ko -->
-  <button type="submit">Post</button>
+  <button type="submit">Enregistrer</button>
 </fieldset>
 </form>
