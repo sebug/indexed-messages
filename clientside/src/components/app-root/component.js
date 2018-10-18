@@ -63,6 +63,7 @@ class ViewModel {
 	this.addGetAllMessagesCallback = this.addGetAllMessagesCallback.bind(this);
 
 	navigator.serviceWorker.addEventListener('message', (event) => {
+	    console.log(event);
 	    if (event.data && event.data.type === 'GetAllMessagesResponse' &&
 	       event.data.data) {
 		this.getAllMessagesListeners.forEach(l => {
