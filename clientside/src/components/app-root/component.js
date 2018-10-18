@@ -18,11 +18,21 @@ class ViewModel {
 	postKey = getOrSetOnCookie('postKey', postKey);
 	partition = getOrSetOnCookie('partition', partition);
 
+	if (!key) {
+	    key = localStorage.getItem('key');
+	}
+	if (!postKey) {
+	    postKey = localStorage.getItem('postKey');
+	}
+	if (!partition) {
+	    partition = localStorage.getItem('partition');
+	}
+
 	this.key = ko.observable(key);
 	if (!this.key()) {
 	    this.key.subscribe(newVal => {
 		if (newVal) {
-		    getOrSetOnCookie('key', newVal);
+		    localStorage.setItem('key', newVal);
 		}
 	    });
 	}
@@ -30,7 +40,7 @@ class ViewModel {
 	if (!this.postKey()) {
 	    this.postKey.subscribe(newVal => {
 		if (newVal) {
-		    getOrSetOnCookie('postKey', newVal);
+		    localStorage.setItem('postKey', newVal);
 		}
 	    });
 	}
@@ -38,7 +48,7 @@ class ViewModel {
 	if (!this.partition()) {
 	    this.partition.subscribe(newVal => {
 		if (newVal) {
-		    getOrSetOnCookie('partition', newVal);
+		    localStorage.setItem('partition', newVal);
 		}
 	    });
 	}
