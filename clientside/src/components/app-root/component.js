@@ -91,6 +91,7 @@ class ViewModel {
     }
 
     addInsertionErrorCallback(listener) {
+	console.log('Adding insertion error listener');
 	this.insertionErrorListeners.push(listener);
     }
 

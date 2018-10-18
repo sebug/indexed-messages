@@ -11,6 +11,7 @@ class ViewModel {
 	this.missedMessages = ko.observableArray([]);
 
 	if (params.addInsertionErrorCallback) {
+	    console.log('Add insertion error callback defined, setting one');
 	    params.addInsertionErrorCallback(data => {
 		console.log('got data from the service worker about missed inserts.');
 		console.log(data.error);
