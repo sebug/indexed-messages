@@ -28,6 +28,14 @@ class ViewModel {
 	    });
 	}
 
+	if (params.addGetFailedMessagesCallback) {
+	    console.log('Add all failed messages callback');
+	    params.addGetFailedMessagesCallback(data => {
+		console.log('got failed messages');
+		this.missedMessages(data);
+	    });
+	}
+
 	// Also, load existing failed messages (on reload for example)
 	if (navigator && navigator.serviceWorker && navigator.serviceWorker.controller) {
 	    navigator.serviceWorker.controller.postMessage('get-failed-messages');

@@ -61,6 +61,8 @@ class ViewModel {
 	this.addInsertionErrorCallback = this.addInsertionErrorCallback.bind(this);
 	this.getAllMessagesListeners = [];
 	this.addGetAllMessagesCallback = this.addGetAllMessagesCallback.bind(this);
+	this.getFailedMessagesListeners = [];
+	this.addGetFailedMessagesCallback = this.addGetFailedMessagesCallback.bind(this);
 
 	navigator.serviceWorker.addEventListener('message', (event) => {
 	    console.log(event);
@@ -74,6 +76,11 @@ class ViewModel {
 		this.insertionErrorListeners.forEach(l => {
 		    console.log('calling back with errors');
 		    l(event.data);
+		});
+	    } else if (event.data && event.data.type === 'GetFailedMessagesResponse') {
+		this.getFailedMessagesListeners.forEach(l => {
+		    console.log('calling back failed messages');
+		    l(event.data.data);
 		});
 	    }
 	});
@@ -94,6 +101,11 @@ class ViewModel {
     addInsertionErrorCallback(listener) {
 	console.log('Adding insertion error listener');
 	this.insertionErrorListeners.push(listener);
+    }
+
+    addGetFailedMessagesCallback(listener) {
+	console.log('Adding get failed messages listener');
+	this.getFailedMessagesListeners.push(listener);
     }
 
     registerMessagePostedListener(listener) {
