@@ -3,27 +3,10 @@ import htmlContent from './component.html';
 import messageList from '../message-list/component.js';
 import messageEdit from '../message-edit/component.js';
 import keyEdit from '../key-edit/component.js';
+import getOrSetOnCookie from '../../lib/getOrSetOnCookie.js';
 ko.components.register('message-list', messageList);
 ko.components.register('message-edit', messageEdit);
 ko.components.register('key-edit', keyEdit);
-
-function getOrSetOnCookie(propertyName, value) {
-    if (value) {
-	let date = new Date();
-	
-	date.setTime(date.getTime() + (365 * 24 * 60 * 60 * 1000));
-	document.cookie = propertyName + '=' + value + '; expires=' +
-	    date.toUTCString() + '; path=/';
-    } else {
-	try {
-	    value = document.cookie.split(';').map(kvp => { let firstIdx = kvp.indexOf('='); return { key: kvp.substring(0, firstIdx).trim(), value: kvp.substring(firstIdx + 1).trim() } }).filter(o => o.key === propertyName).map(o => o.value)[0];
-	    console.log('value is ' + value);
-	} catch (e) {
-	    console.log(e);
-	}
-    }
-    return value;
-}
 
 class ViewModel {
     constructor(params) {
@@ -36,8 +19,29 @@ class ViewModel {
 	partition = getOrSetOnCookie('partition', partition);
 
 	this.key = ko.observable(key);
+	if (!this.key()) {
+	    this.key.subscribe(newVal => {
+		if (newVal) {
+		    getOrSetOnCookie('key', newVal);
+		}
+	    });
+	}
 	this.postKey = ko.observable(postKey);
+	if (!this.postKey()) {
+	    this.postKey.subscribe(newVal => {
+		if (newVal) {
+		    getOrSetOnCookie('postKey', newVal);
+		}
+	    });
+	}
 	this.partition = ko.observable(partition);
+	if (!this.partition()) {
+	    this.partition.subscribe(newVal => {
+		if (newVal) {
+		    getOrSetOnCookie('partition', newVal);
+		}
+	    });
+	}
 	this.messagePostedCallback = this.messagePostedCallback.bind(this);
 	this.registerMessagePostedListener = this.registerMessagePostedListener.bind(this);
 	this.messagePostedListeners = [];
