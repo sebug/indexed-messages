@@ -18,7 +18,7 @@ function subscribeToStoreChangesToLocalStorage(model) {
 	localStorage.setItem('message-dateTime', newVal);
     });
     model.from.subscribe(newVal => {
-	localStorage.setItem('message-from');
+	localStorage.setItem('message-from', newVal);
     });
     model.to.subscribe(newVal => {
 	localStorage.setItem('message-to', newVal);
