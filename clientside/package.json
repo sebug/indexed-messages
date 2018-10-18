@@ -7,7 +7,7 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "build": "webpack && cp node_modules/babel-polyfill/dist/polyfill.min.js dist/ && cp manifest.json dist/ && node index.js && cp images/apple-launch-640x1136.png dist/"
+    "build": "webpack && cp node_modules/babel-polyfill/dist/polyfill.min.js dist/ && cp manifest.json dist/ && node index.js && cp images/apple-launch-*.png dist/"
   },
   "devDependencies": {
     "@babel/core": "^7.1.2",

@@ -1,8 +1,8 @@
 // The service worker to be used for this sub-element.
 import idb from 'idb';
 
-var CACHE_NAME = 'my-static-site-cache-v1.25';
-var DYNAMIC_CACHE_NAME = 'my-dynamic-site-cache-1.25';
+var CACHE_NAME = 'my-static-site-cache-v1.26';
+var DYNAMIC_CACHE_NAME = 'my-dynamic-site-cache-1.26';
 var urlsToCache = [
   '/',
   '/polyfill.min.js',
@@ -14,7 +14,13 @@ var urlsToCache = [
     '/static/icon_152x152.png',
     '/static/icon_180x180.png',
     '/static/icon_167x167.png',
-    '/static/apple-launch-640x1136.png'
+    '/static/apple-launch-640x1136.png',
+    '/static/apple-launch-1125x2436.png',
+    '/static/apple-launch-1242x2208.png',
+    '/static/apple-launch-1536x2048.png',
+    '/static/apple-launch-1668x2224.png',
+    '/static/apple-launch-2048x2732.png',
+    '/static/apple-launch-750x1334.png'
 ];
 
 
@@ -30,7 +36,7 @@ self.addEventListener('install', function (e) {
     try {
 	// Delete old caches
 	let i;
-	for (i = 0; i < 25; i += 1) {
+	for (i = 0; i < 26; i += 1) {
 	    let cacheKey = 'my-static-site-cache-v1.' + i;
 	    caches.delete(cacheKey);
 	    let dynamicCacheKey = 'my-dynamic-site-cache-1.' + i;
