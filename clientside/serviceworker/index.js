@@ -1,8 +1,8 @@
 // The service worker to be used for this sub-element.
 import idb from 'idb';
 
-var CACHE_NAME = 'my-static-site-cache-v1.20';
-var DYNAMIC_CACHE_NAME = 'my-dynamic-site-cache-1.20';
+var CACHE_NAME = 'my-static-site-cache-v1.21';
+var DYNAMIC_CACHE_NAME = 'my-dynamic-site-cache-1.21';
 var urlsToCache = [
   '/',
   '/polyfill.min.js',
@@ -29,7 +29,7 @@ self.addEventListener('install', function (e) {
     try {
 	// Delete old caches
 	let i;
-	for (i = 0; i < 20; i += 1) {
+	for (i = 0; i < 21; i += 1) {
 	    let cacheKey = 'my-static-site-cache-v1.' + i;
 	    caches.delete(cacheKey);
 	    let dynamicCacheKey = 'my-dynamic-site-cache-1.' + i;
