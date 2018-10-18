@@ -2,6 +2,10 @@
 <key-edit params="key: key, partition: partition, postKey: postKey"></key-edit>
 <!-- /ko -->
 
+<!-- ko if: postKey -->
+<insert-errors params="key: postKey"></insertErrors>
+<!-- /ko -->
+
 <!-- ko if: key -->
 <message-list params="key: key, registerMessagePostedListener: registerMessagePostedListener, partition: partition"></message-list>
 <!-- /ko -->

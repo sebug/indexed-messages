@@ -3,6 +3,7 @@ import htmlContent from './component.html';
 import messageList from '../message-list/component.js';
 import messageEdit from '../message-edit/component.js';
 import keyEdit from '../key-edit/component.js';
+import insertErrors from '../insert-errors/component.js';
 import getOrSetOnCookie from '../../lib/getOrSetOnCookie.js';
 ko.components.register('message-list', messageList);
 ko.components.register('message-edit', messageEdit);
