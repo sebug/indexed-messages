@@ -1,8 +1,8 @@
 // The service worker to be used for this sub-element.
 import idb from 'idb';
 
-var CACHE_NAME = 'my-static-site-cache-v1.40';
-var DYNAMIC_CACHE_NAME = 'my-dynamic-site-cache-1.40';
+var CACHE_NAME = 'my-static-site-cache-v1.41';
+var DYNAMIC_CACHE_NAME = 'my-dynamic-site-cache-1.41';
 var urlsToCache = [
   '/',
   '/polyfill.min.js',
@@ -36,7 +36,7 @@ self.addEventListener('install', function (e) {
     try {
 	// Delete old caches
 	let i;
-	for (i = 0; i < 40; i += 1) {
+	for (i = 0; i < 41; i += 1) {
 	    let cacheKey = 'my-static-site-cache-v1.' + i;
 	    caches.delete(cacheKey);
 	    let dynamicCacheKey = 'my-dynamic-site-cache-1.' + i;
@@ -88,6 +88,15 @@ function getMessagesDBPromise() {
 	console.log('making a new object store');
 	if (!upgradeDB.objectStoreNames.contains('messages')) {
 	    upgradeDB.createObjectStore('messages', { keyPath: 'dateTime' });
+	}
+    });
+}
+
+function getFailedMessagesDBPromiseDB() {
+    return idb.open('failed-messages-db', 1, function (upgradeDB) {
+	console.log('making a new failed messages object store');
+	if (!upgradeDB.objectStoreNames.contains('failedMessages')) {
+	    upgradeDB.createObjectStore('failedMessages', { keyPath: 'dateTime' });
 	}
     });
 }
@@ -155,6 +164,18 @@ function storeIndividualMessageInIndexedDB(message) {
     });
 }
 
+function storeFailedMessage(message) {
+    let dbPromise = getFailedMessagesDBPromiseDB();
+    return dbPromise.then(function (db) {
+	let tx = db.transaction('failedMessages', 'readwrite');
+	let store = tx.objectStore('failedMessages');
+	store.put(message);
+	return tx.complete;
+    }, function (err) {
+	console.log(err);
+    });
+}
+
 function cacheAndIndexedDBStrategy(e) {
     let clonedRequest = e.request.clone();
     if (e.request && e.request.url && e.request.url.indexOf('/GetMessagesTrigger') >= 0) {
@@ -205,7 +226,9 @@ function cacheAndIndexedDBStrategy(e) {
 		   }).then(null, err => {
 		       return secondClonedRequest.json().then(message => {
 			   notifyInsertionError(message, 'failed to fetch');
-			   return new Response(JSON.stringify(message), { headers: { 'Content-Type': 'application/json' } });
+			   return storeFailedMessage(message).then(t => {
+			       return new Response(JSON.stringify(message), { headers: { 'Content-Type': 'application/json' } });
+			   });
 		       });
 		   }));
     } else {
