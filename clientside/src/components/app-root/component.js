@@ -25,7 +25,9 @@ class ViewModel {
 	    postKey = localStorage.getItem('postKey');
 	}
 	if (!partition) {
+	    alert('Getting partition from local storage');
 	    partition = localStorage.getItem('partition');
+	    alert('partition is ' + partition);
 	}
 
 	this.key = ko.observable(key);
@@ -48,6 +50,7 @@ class ViewModel {
 	if (!this.partition()) {
 	    this.partition.subscribe(newVal => {
 		if (newVal) {
+		    alert('Setting partition in local storage');
 		    localStorage.setItem('partition', newVal);
 		}
 	    });
