@@ -1,8 +1,8 @@
 // The service worker to be used for this sub-element.
 import idb from 'idb';
 
-var CACHE_NAME = 'my-static-site-cache-v1.35';
-var DYNAMIC_CACHE_NAME = 'my-dynamic-site-cache-1.35';
+var CACHE_NAME = 'my-static-site-cache-v1.36';
+var DYNAMIC_CACHE_NAME = 'my-dynamic-site-cache-1.36';
 var urlsToCache = [
   '/',
   '/polyfill.min.js',
@@ -36,7 +36,7 @@ self.addEventListener('install', function (e) {
     try {
 	// Delete old caches
 	let i;
-	for (i = 0; i < 35; i += 1) {
+	for (i = 0; i < 36; i += 1) {
 	    let cacheKey = 'my-static-site-cache-v1.' + i;
 	    caches.delete(cacheKey);
 	    let dynamicCacheKey = 'my-dynamic-site-cache-1.' + i;
@@ -204,7 +204,7 @@ function cacheAndIndexedDBStrategy(e) {
 		       return response;
 		   }).then(null, err => {
 		       return secondClonedRequest.json().then(message => {
-			   notifyInsertionError(message, err);
+			   notifyInsertionError(message, 'failed to fetch');
 			   return new Response(JSON.stringify(message), { headers: { 'Content-Type': 'application/json' } });
 		       });
 		   }));
