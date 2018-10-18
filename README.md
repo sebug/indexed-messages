@@ -33,4 +33,5 @@ we take from the initial URL) are not taken over. I have thus added an initial c
 # Offline
 If we try to insert a message while offline, we notify another component that this happens and let the user click on a synchronize button once they're back online (since background sync is not really an option).
 
+One interesting problem that came up here was the fact that you can't serialize the error response when the insertion failed.
 
