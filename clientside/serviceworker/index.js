@@ -1,8 +1,8 @@
 // The service worker to be used for this sub-element.
 import idb from 'idb';
 
-var CACHE_NAME = 'my-static-site-cache-v1.42';
-var DYNAMIC_CACHE_NAME = 'my-dynamic-site-cache-1.42';
+var CACHE_NAME = 'my-static-site-cache-v1.43';
+var DYNAMIC_CACHE_NAME = 'my-dynamic-site-cache-1.43';
 var urlsToCache = [
   '/',
   '/polyfill.min.js',
@@ -36,7 +36,7 @@ self.addEventListener('install', function (e) {
     try {
 	// Delete old caches
 	let i;
-	for (i = 0; i < 42; i += 1) {
+	for (i = 0; i < 43; i += 1) {
 	    let cacheKey = 'my-static-site-cache-v1.' + i;
 	    caches.delete(cacheKey);
 	    let dynamicCacheKey = 'my-dynamic-site-cache-1.' + i;
@@ -279,7 +279,7 @@ self.addEventListener('fetch', function (e) {
 self.addEventListener('message', function (event) {
     console.log('Service Worker received message');
     if (event.data == 'get-failed-messages') {
-	getFailedMessagesDBPromiseDB().then(notifyFailedMessages);
+	getAllFailedMessages().then(notifyFailedMessages);
     }
     console.log(event.data);
 });
