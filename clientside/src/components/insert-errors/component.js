@@ -7,6 +7,10 @@ class ViewModel {
 	if (typeof this.key !== 'function') {
 	    this.key = ko.observable(this.key);
 	}
+	this.partition = params.partition;
+	if (typeof this.partition !== 'function') {
+	    this.partition = ko.observable(this.partition);
+	}
 
 	this.missedMessages = ko.observableArray([]);
 
