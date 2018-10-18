@@ -35,7 +35,7 @@ class ViewModel {
 	let postPromises = this.missedMessages().map(message => {
 	    return this.postToMessageTrigger(message);
 	});
-	let results = Promise.all(postPromises);
+	let results = await Promise.all(postPromises);
 	console.log(results);
 	return results;
     }
