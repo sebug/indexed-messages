@@ -8,6 +8,7 @@ import getOrSetOnCookie from '../../lib/getOrSetOnCookie.js';
 ko.components.register('message-list', messageList);
 ko.components.register('message-edit', messageEdit);
 ko.components.register('key-edit', keyEdit);
+ko.components.register('insert-errors', insertErrors);
 
 class ViewModel {
     constructor(params) {
