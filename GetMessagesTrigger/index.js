@@ -9,7 +9,7 @@ module.exports = function (context, req) {
     
     let query = new azure.TableQuery()
 	.top(100)
-	.where('PartitionKey eq ?', 'prod');
+	.where('PartitionKey eq ?', partition);
 
     tableService.queryEntities('radioMessages', query, null, function(error, result, response) {
 	if (!error) {

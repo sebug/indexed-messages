@@ -9,13 +9,13 @@ module.exports = function (context, req) {
     context.log('Partition is ' + partition);
     
     let entity = {
-	PartitionKey: entGen.String('prod'),
+	PartitionKey: entGen.String(partition),
 	RowKey: entGen.String(req.body.dateTime),
 	From: entGen.String(req.body.from),
 	To: entGen.String(req.body.to),
 	Message: entGen.String(req.body.message)
     };
-    tableService.insertEntity('radioMessages', entity, function(error, result, response) {
+    tableService.insertOrReplaceEntity('radioMessages', entity, function(error, result, response) {
 	if (!error) {
 	    context.log(JSON.stringify(result));
 	    context.res = {
