@@ -1,8 +1,8 @@
 // The service worker to be used for this sub-element.
 import idb from 'idb';
 
-var CACHE_NAME = 'my-static-site-cache-v1.29';
-var DYNAMIC_CACHE_NAME = 'my-dynamic-site-cache-1.29';
+var CACHE_NAME = 'my-static-site-cache-v1.30';
+var DYNAMIC_CACHE_NAME = 'my-dynamic-site-cache-1.30';
 var urlsToCache = [
   '/',
   '/polyfill.min.js',
@@ -36,7 +36,7 @@ self.addEventListener('install', function (e) {
     try {
 	// Delete old caches
 	let i;
-	for (i = 0; i < 29; i += 1) {
+	for (i = 0; i < 30; i += 1) {
 	    let cacheKey = 'my-static-site-cache-v1.' + i;
 	    caches.delete(cacheKey);
 	    let dynamicCacheKey = 'my-dynamic-site-cache-1.' + i;
@@ -191,7 +191,7 @@ function cacheAndIndexedDBStrategy(e) {
 	// Also perform the actual fetch request to store the message
 	// TODO: error handling for offline
 	let secondClonedRequest = e.request.clone();
-	fetch(e.request)
+	e.waitUntil(fetch(e.request)
 		   .then(function (response) {
 		       if(isInvalidResponse(response)) {
 			   return secondClonedRequest.json().then(message => {
@@ -203,12 +203,12 @@ function cacheAndIndexedDBStrategy(e) {
 		       let responseToCache = response.clone();
 			  
 		       return response;
-		   }).catch(err => {
+		   }).then(null, err => {
 		       return secondClonedRequest.json().then(message => {
 			   notifyInsertionError(message, err);
 			   return new Response(JSON.stringify(message), { headers: { 'Content-Type': 'application/json' } });
 		       });
-		   });
+		   }));
     } else {
 	e.respondWith(fetch(e.request)
 		      .then(function (response) {

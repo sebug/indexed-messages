@@ -8,7 +8,7 @@ module.exports = function (context, req) {
     context.log('Partition is ' + partition);
     
     let query = new azure.TableQuery()
-	.top(100)
+	.top(1000)
 	.where('PartitionKey eq ?', partition);
 
     tableService.queryEntities('radioMessages', query, null, function(error, result, response) {
