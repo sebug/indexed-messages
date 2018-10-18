@@ -57,6 +57,25 @@ class ViewModel {
 	this.messagePostedCallback = this.messagePostedCallback.bind(this);
 	this.registerMessagePostedListener = this.registerMessagePostedListener.bind(this);
 	this.messagePostedListeners = [];
+	this.insertionErrorListeners = [];
+	this.addInsertionErrorCallback = this.addInsertionErrorCallback.bind(this);
+	this.getAllMessagesListeners = [];
+	this.addGetAllMessagesCallback = this.addGetAllMessagesCallback.bind(this);
+
+	navigator.serviceWorker.addEventListener('message', (event) => {
+	    if (event.data && event.data.type === 'GetAllMessagesResponse' &&
+	       event.data.data) {
+		this.getAllMessagesListeners.forEach(l => {
+		    console.log('calling back with messages');
+		    l(event.data.data);
+		});
+	    } else if (event.data && event.data.type === 'InsertionError') {
+		this.insertionErrorListeners.forEach(l => {
+		    console.log('calling back with errors');
+		    l(event.data);
+		});
+	    }
+	});
     }
 
     messagePostedCallback(message) {
@@ -65,6 +84,14 @@ class ViewModel {
 		l(message);
 	    });
 	}
+    }
+
+    addGetAllMessagesCallback(listener) {
+	this.getAllMessagesListeners.push(listener);
+    }
+
+    addInsertionErrorCallback(listener) {
+	this.insertionErrorListeners.push(listener);
     }
 
     registerMessagePostedListener(listener) {

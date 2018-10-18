@@ -3,11 +3,11 @@
 <!-- /ko -->
 
 <!-- ko if: postKey -->
-<insert-errors params="key: postKey"></insert-errors>
+<insert-errors params="key: postKey, addInsertionErrorCallback: addInsertionErrorCallback"></insert-errors>
 <!-- /ko -->
 
 <!-- ko if: key -->
-<message-list params="key: key, registerMessagePostedListener: registerMessagePostedListener, partition: partition"></message-list>
+<message-list params="key: key, registerMessagePostedListener: registerMessagePostedListener, partition: partition, addGetAllMessagesCallback: addGetAllMessagesCallback"></message-list>
 <!-- /ko -->
 
 <!-- ko if: postKey -->
