@@ -1,8 +1,8 @@
 // The service worker to be used for this sub-element.
 import idb from 'idb';
 
-var CACHE_NAME = 'my-static-site-cache-v1.50';
-var DYNAMIC_CACHE_NAME = 'my-dynamic-site-cache-1.50';
+var CACHE_NAME = 'my-static-site-cache-v1.51';
+var DYNAMIC_CACHE_NAME = 'my-dynamic-site-cache-1.51';
 var urlsToCache = [
   '/',
   '/polyfill.min.js',
@@ -36,7 +36,7 @@ self.addEventListener('install', function (e) {
     try {
 	// Delete old caches
 	let i;
-	for (i = 0; i < 50; i += 1) {
+	for (i = 0; i < 51; i += 1) {
 	    let cacheKey = 'my-static-site-cache-v1.' + i;
 	    caches.delete(cacheKey);
 	    let dynamicCacheKey = 'my-dynamic-site-cache-1.' + i;
@@ -153,7 +153,9 @@ function getAllMessagesFromIndexedDB(partition) {
     return dbPromise.then(function (db) {
 	var tx = db.transaction('messages');
 	var store = tx.objectStore('messages');
-	return store.getAll();
+	let range = IDBKeyRange.only(partition);
+	let index = store.index('partition-index');
+	return index.getAll(range);
     }, function (err) {
 	console.log(err);
 	return null;
