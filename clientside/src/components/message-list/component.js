@@ -32,6 +32,13 @@ class ViewModel {
 	setTimeout(() => {
 	    this.getData();
 	}, 0);
+
+	// Get the data again if partition changes
+	this.partition.subscribe(newVal => {
+	    if (newVal) {
+		this.getData();
+	    }
+	});
     }
 
     async getData() {
