@@ -1,8 +1,8 @@
 // The service worker to be used for this sub-element.
 import idb from 'idb';
 
-var CACHE_NAME = 'my-static-site-cache-v1.48';
-var DYNAMIC_CACHE_NAME = 'my-dynamic-site-cache-1.48';
+var CACHE_NAME = 'my-static-site-cache-v1.49';
+var DYNAMIC_CACHE_NAME = 'my-dynamic-site-cache-1.49';
 var urlsToCache = [
   '/',
   '/polyfill.min.js',
@@ -36,7 +36,7 @@ self.addEventListener('install', function (e) {
     try {
 	// Delete old caches
 	let i;
-	for (i = 0; i < 48; i += 1) {
+	for (i = 0; i < 49; i += 1) {
 	    let cacheKey = 'my-static-site-cache-v1.' + i;
 	    caches.delete(cacheKey);
 	    let dynamicCacheKey = 'my-dynamic-site-cache-1.' + i;
@@ -84,10 +84,17 @@ function cacheThenNetworkStrategy(e) {
 }
 
 function getMessagesDBPromise() {
-    return idb.open('messages-db', 2, function (upgradeDB) {
+    return idb.open('messages-db', 3, function (upgradeDB) {
 	console.log('making a new object store');
+	var objectStore;
 	if (!upgradeDB.objectStoreNames.contains('messages')) {
-	    upgradeDB.createObjectStore('messages', { keyPath: 'dateTime' });
+	    objectStore = upgradeDB.createObjectStore('messages', { keyPath: 'dateTime' });
+	} else {
+	    objectStore = upgradeDB.transaction.objectStore('messages');
+	}
+
+	if (!objectStore.indexNames.contains("partition-index")) {
+	    objectStore.createIndex("partition-index", "partition", { unique: false });
 	}
     });
 }
