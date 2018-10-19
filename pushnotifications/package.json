@@ -1,0 +1,15 @@
+{
+  "name": "indexedmessagespn",
+  "version": "1.0.0",
+  "description": "Builds the files required for push notifications",
+  "main": "index.js",
+  "author": "Sebastian Gfeller",
+  "license": "MIT",
+    "private": false,
+    "scripts": {
+	"build": "mkdir -p dist"
+    },
+  "dependencies": {
+    "sharp": "^0.21.0"
+  }
+}
