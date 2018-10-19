@@ -1,8 +1,8 @@
 // The service worker to be used for this sub-element.
 import idb from 'idb';
 
-var CACHE_NAME = 'my-static-site-cache-v1.46';
-var DYNAMIC_CACHE_NAME = 'my-dynamic-site-cache-1.46';
+var CACHE_NAME = 'my-static-site-cache-v1.47';
+var DYNAMIC_CACHE_NAME = 'my-dynamic-site-cache-1.47';
 var urlsToCache = [
   '/',
   '/polyfill.min.js',
@@ -36,7 +36,7 @@ self.addEventListener('install', function (e) {
     try {
 	// Delete old caches
 	let i;
-	for (i = 0; i < 46; i += 1) {
+	for (i = 0; i < 47; i += 1) {
 	    let cacheKey = 'my-static-site-cache-v1.' + i;
 	    caches.delete(cacheKey);
 	    let dynamicCacheKey = 'my-dynamic-site-cache-1.' + i;
@@ -214,6 +214,12 @@ function notifyFailedMessages(messages) {
 function cacheAndIndexedDBStrategy(e) {
     let clonedRequest = e.request.clone();
     if (e.request && e.request.url && e.request.url.indexOf('/GetMessagesTrigger') >= 0) {
+	let partition = 'prod';
+	let m = /partition=([^&]+)/.exec(e.request.url);
+	if (m) {
+	    partition = m[1];
+	    console.log('matched partition, it is ' + partition);
+	}
 	console.log('go get messages');
 	e.respondWith(getAllMessagesFromIndexedDB().then(messages => {
 	    if (!messages) {
@@ -238,6 +244,12 @@ function cacheAndIndexedDBStrategy(e) {
 		return response;
 	    });
     } else if (e.request && e.request.url && e.request.url.indexOf('/NewMessage') >= 0) {
+	let partition = 'prod';
+	let m = /partition=([^&]+)/.exec(e.request.url);
+	if (m) {
+	    partition = m[1];
+	    console.log('matched partition, it is ' + partition);
+	}
 	e.respondWith(clonedRequest.json().then(message => {
 	    return storeIndividualMessageInIndexedDB(message).then((transactionState) => {
 		return new Response(JSON.stringify(message), { headers: { 'Content-Type': 'application/json' } });
