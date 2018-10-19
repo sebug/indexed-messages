@@ -84,6 +84,15 @@ class ViewModel {
 		});
 	    }
 	});
+
+
+	setTimeout(() => {
+	    if ('Notification' in window) {
+		Notification.requestPermission(status => {
+		    console.log('Notification permission status: ', status);
+		});
+	    }
+	}, 0);
     }
 
     messagePostedCallback(message) {
