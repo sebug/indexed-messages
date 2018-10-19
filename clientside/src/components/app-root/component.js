@@ -64,6 +64,8 @@ class ViewModel {
 	this.getFailedMessagesListeners = [];
 	this.addGetFailedMessagesCallback = this.addGetFailedMessagesCallback.bind(this);
 
+	this.showParameters = ko.observable(false);
+
 	navigator.serviceWorker.addEventListener('message', (event) => {
 	    console.log(event);
 	    if (event.data && event.data.type === 'GetAllMessagesResponse' &&

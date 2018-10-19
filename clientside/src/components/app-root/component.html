@@ -1,5 +1,14 @@
-<!-- ko if: !key() || !postKey() -->
+<!-- ko if: !key() || !postKey() || showParameters() -->
 <key-edit params="key: key, partition: partition, postKey: postKey"></key-edit>
+<!-- /ko -->
+
+<!-- ko if: key() && postKey() -->
+<!-- ko ifnot: showParameters -->
+<p class="parameter-toggle">Paramètres pris en compte, <button data-bind="click: function() { showParameters(true); }">changer</button></p>
+<!-- /ko -->
+<!-- ko if: showParameters -->
+<p class="parameter-toggle"><button data-bind="click: function() { showParameters(false); }">Cacher les paramètres</button></p>
+<!-- /ko -->
 <!-- /ko -->
 
 <!-- ko if: postKey -->
