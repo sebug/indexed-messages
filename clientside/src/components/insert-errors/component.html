@@ -1,8 +1,8 @@
 <div class="insert-errors-outer">
   <!-- ko if: missedMessages() && missedMessages().length -->
   <div class="insert-errors-inner">
-    <h3>Error inserting <span data-bind="text: missedMessages().length"></span> Messages</h3>
-    <p><button data-bind="click: resynchronize">Resynchronize</button></p>
+    <h3>Erreur d'enregistrement de <span data-bind="text: missedMessages().length"></span> messages</h3>
+    <p><button data-bind="click: resynchronize">Retenter</button></p>
   </div>
   <!-- /ko -->
 </div>
