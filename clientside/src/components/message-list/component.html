@@ -1,5 +1,13 @@
 <div>
-  <h2>Liste des messages pour <span data-bind="text: partition"></span></h2>
+  <h2>Journal des messages pour
+
+    <!-- ko if: partition() === 'prod' -->
+    CPA2018
+    <!-- /ko -->
+    <!-- ko ifnot: partition() === 'prod' -->
+    <span data-bind="text: partition"></span>
+    <!-- /ko -->
+  </h2>
   <table>
     <thead>
       <tr>
