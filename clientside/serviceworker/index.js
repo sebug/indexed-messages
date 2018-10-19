@@ -1,8 +1,8 @@
 // The service worker to be used for this sub-element.
 import idb from 'idb';
 
-var CACHE_NAME = 'my-static-site-cache-v1.47';
-var DYNAMIC_CACHE_NAME = 'my-dynamic-site-cache-1.47';
+var CACHE_NAME = 'my-static-site-cache-v1.48';
+var DYNAMIC_CACHE_NAME = 'my-dynamic-site-cache-1.48';
 var urlsToCache = [
   '/',
   '/polyfill.min.js',
@@ -36,7 +36,7 @@ self.addEventListener('install', function (e) {
     try {
 	// Delete old caches
 	let i;
-	for (i = 0; i < 47; i += 1) {
+	for (i = 0; i < 48; i += 1) {
 	    let cacheKey = 'my-static-site-cache-v1.' + i;
 	    caches.delete(cacheKey);
 	    let dynamicCacheKey = 'my-dynamic-site-cache-1.' + i;
@@ -123,13 +123,14 @@ function notifyInsertionError(message, error) {
     }));
 }
 
-function storeFullResultsInIndexedDB(messages) {
+function storeFullResultsInIndexedDB(messages, partition) {
     let dbPromise = getMessagesDBPromise();
     dbPromise.then(function (db) {
 	var tx = db.transaction('messages', 'readwrite');
 	var store = tx.objectStore('messages');
 	if (messages && messages.length) {
 	    messages.forEach(message => {
+		message.partition = partition;
 		store.put(message);
 	    });
 	}
@@ -140,7 +141,7 @@ function storeFullResultsInIndexedDB(messages) {
     });
 }
 
-function getAllMessagesFromIndexedDB() {
+function getAllMessagesFromIndexedDB(partition) {
     let dbPromise = getMessagesDBPromise();
     return dbPromise.then(function (db) {
 	var tx = db.transaction('messages');
@@ -152,11 +153,12 @@ function getAllMessagesFromIndexedDB() {
     });
 }
 
-function storeIndividualMessageInIndexedDB(message) {
+function storeIndividualMessageInIndexedDB(message, partition) {
     let dbPromise = getMessagesDBPromise();
     return dbPromise.then(function (db) {
 	var tx = db.transaction('messages', 'readwrite');
 	var store = tx.objectStore('messages');
+	message.partition = partition;
 	store.put(message);
 	return tx.complete;
     }, function (err) {
@@ -221,7 +223,7 @@ function cacheAndIndexedDBStrategy(e) {
 	    console.log('matched partition, it is ' + partition);
 	}
 	console.log('go get messages');
-	e.respondWith(getAllMessagesFromIndexedDB().then(messages => {
+	e.respondWith(getAllMessagesFromIndexedDB(partition).then(messages => {
 	    if (!messages) {
 		return fetch(e.request);
 	    } else {
@@ -239,7 +241,7 @@ function cacheAndIndexedDBStrategy(e) {
 		}
 
 		let responseToCache = response.clone();
-		responseToCache.json().then(storeFullResultsInIndexedDB);
+		responseToCache.json().then(messages => storeFullResultsInIndexedDB(messages, partition));
 
 		return response;
 	    });
@@ -262,6 +264,7 @@ function cacheAndIndexedDBStrategy(e) {
 		   .then(function (response) {
 		       if(isInvalidResponse(response)) {
 			   return secondClonedRequest.json().then(message => {
+			       message.partition = partition;
 			       notifyInsertionError(message, "Invalid response: " + response.status);
 			       return new Response(JSON.stringify(message), { headers: { 'Content-Type': 'application/json' } });
 			   });
