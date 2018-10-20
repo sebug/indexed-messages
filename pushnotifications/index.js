@@ -15,6 +15,18 @@ const sizesWithMultiplier = sizes.map(size => {
     };
 }));
 
+const websiteInfo = {
+    websiteName: 'Journal des messages',
+    websitePushID: 'web.net.azurewebsites.indexedmessages',
+    allowedDomains: [ 'https://indexedmessages.azurewebsites.net' ],
+    urlFormatString: 'https://indexedmessages.azurewebsites.net?partition=%@',
+    authenticationToken: process.env.PUSH_NOTIFICATION_AUTHENTICATION_TOKEN,
+    webServiceUrl: 'https://indexedmessages.azurewebsites.net/push'
+};
+const websiteInfoJSON = JSON.stringify(websiteInfo);
+
+console.log(websiteInfoJSON);
+
 // create icons for push notification
 const filePrefix = 'dist/IndexedMessages.pushpackage/';
 Promise.all(sizesWithMultiplier.map(o => {

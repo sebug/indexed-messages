@@ -16,7 +16,15 @@ steps:
     cd clientside
     npm install
     npm run build
-  displayName: 'npm install and build'
+    cd ..
+  displayName: 'npm install and build client side'
+
+- script: |
+    cd pushnotifications
+    npm install
+    npm run build
+    cd ..
+  displayName: 'npm install and build push package'
 
 - task: PublishBuildArtifacts@1
   inputs:
