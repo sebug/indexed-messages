@@ -5,11 +5,12 @@
   "main": "index.js",
   "author": "Sebastian Gfeller",
   "license": "MIT",
-    "private": false,
-    "scripts": {
-	"build": "mkdir -p dist/IndexedMessages.pushpackage/icon.iconset && node index.js"
-    },
+  "private": false,
+  "scripts": {
+    "build": "mkdir -p dist/IndexedMessages.pushpackage/icon.iconset && node index.js"
+  },
   "dependencies": {
+    "fs-extra": "^7.0.0",
     "sharp": "^0.21.0"
   }
 }
