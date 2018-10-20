@@ -15,6 +15,7 @@ const sizesWithMultiplier = sizes.map(size => {
     };
 }));
 
+const filePrefix = 'dist/IndexedMessages.pushpackage/';
 const websiteInfo = {
     websiteName: 'Journal des messages',
     websitePushID: 'web.net.azurewebsites.indexedmessages',
@@ -23,12 +24,24 @@ const websiteInfo = {
     authenticationToken: process.env.PUSH_NOTIFICATION_AUTHENTICATION_TOKEN,
     webServiceUrl: 'https://indexedmessages.azurewebsites.net/push'
 };
-const websiteInfoJSON = JSON.stringify(websiteInfo);
 
-console.log(websiteInfoJSON);
+const websiteInfoJSON = JSON.stringify(websiteInfo);
+const websiteJSONFileName = filePrefix + 'website.json';
+const websiteJSONPromise = fs.outputFile(websiteJSONFileName, websiteInfoJSON)
+      .then(() => {
+	  return fs.readFile(websiteJSONFileName, 'utf-8');
+      }).then(data => {
+	  const sha512Sum = crypto.createHash('sha512');
+	  sha512Sum.update(data);
+	  const digest = sha512Sum.digest('hex');
+	  return {
+	      fileName: 'website.json',
+	      hashType: 'sha512',
+	      hashValue: digest
+	  };
+      });
 
 // create icons for push notification
-const filePrefix = 'dist/IndexedMessages.pushpackage/';
 Promise.all(sizesWithMultiplier.map(o => {
     return sharp('../clientside/images/logo_messages.png')
 	.resize(o.size * o.times, o.size * o.times)
@@ -48,6 +61,6 @@ Promise.all(sizesWithMultiplier.map(o => {
 		};
 	    });
 	});
-})).then(filesWithDigest => {
+}).concat([websiteJSONPromise])).then(filesWithDigest => {
     console.log(filesWithDigest);
 });
