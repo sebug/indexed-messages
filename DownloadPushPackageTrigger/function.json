@@ -8,12 +8,6 @@
             "name": "req",
             "methods": ["post"]
         },
-	{
-	    "name": "blobContents",
-	    "type": "blob",
-	    "direction": "in",
-	    "path": "indexedmessagesstatic/package.zip"
-	},
         {
             "type": "http",
             "direction": "out",
