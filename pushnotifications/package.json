@@ -1,4 +1,5 @@
 {
+    "os" : [ "!win32" ],
   "name": "indexedmessagespn",
   "version": "1.0.0",
   "description": "Builds the files required for push notifications",
