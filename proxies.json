@@ -53,6 +53,15 @@
                 "route": "/static/{*restOfPath}"
             },
             "backendUri": "https://indexedmessages.blob.core.windows.net/indexedmessagesstatic/{restOfPath}"
-        }
+        },
+	"downloadPushPackage": {
+	    "matchCondition": {
+		"methods": [
+		    "POST"
+		],
+		"route": "/v2/pushPackages/{*websitePushID}"
+	    },
+	    "backendUri": "https://indexedmessages.blob.core.windows.net/indexedmessagesstatic/package.zip"
+	}
     }
 }
