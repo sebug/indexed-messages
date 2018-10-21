@@ -50,3 +50,5 @@ The other register and delete functions should work as well.
 To return the items of the correct partition we use index.getAll, which is not supported by Internet Explorer.
 
 
+# Builds
+Turns out that Azure functions keeps old files around during build. So now I'm kind of screwed until they're invalidated.
