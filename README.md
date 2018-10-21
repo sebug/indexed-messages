@@ -44,6 +44,8 @@ So to start
 
 Should download the package.zip that will be used to ask for notifications (with icon and all).
 
+The other register and delete functions should work as well.
+
 # Searching by Index
 To return the items of the correct partition we use index.getAll, which is not supported by Internet Explorer.
 
