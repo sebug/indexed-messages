@@ -62,6 +62,15 @@
 		"route": "/v2/pushPackages/{*websitePushID}"
 	    },
 	    "backendUri": "https://localhost/api/DownloadPushPackageTrigger?version=v2&websitePushID={websitePushID}"
+	},
+	"registerDevicePermissionPolicy": {
+	    "matchCondition": {
+		"methods": [
+		    "POST"
+		],
+		"route": "/v2/devices/{*deviceToken}/registrations/{websitePushID}"
+	    },
+	    "backendUri": "https://localhost/api/RegisterDevicePermissionPolicy?deviceToken={deviceToken}&websitePushID={websitePushID}"
 	}
     }
 }
