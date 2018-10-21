@@ -30,7 +30,4 @@ steps:
   inputs:
     PathtoPublish: '$(System.DefaultWorkingDirectory)/clientside/dist'
 
-- task: PublishBuildArtifacts@1
-  inputs:
-    PathtoPublish: '$(System.DefaultWorkingDirectory)/pushnotifications/dist/out'
 
