@@ -1,7 +1,7 @@
 const https = require('https');
 
 module.exports = function (context, req) {
-    context.log('body is ' + JSON.stringify(req.body));
+    context.log('body is ' + JSON.stringify(req.body || {}));
     context.log('version is ' + req.query.version);
     context.log('website push ID is ' + req.query.websitePushID);
     context.log('starting zip request');
