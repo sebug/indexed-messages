@@ -38,5 +38,12 @@ One interesting problem that came up here was the fact that you can't serialize 
 # Push Notifications
 Well server side they're gonna be a pain for Safari ( https://developer.apple.com/library/archive/documentation/NetworkingInternet/Conceptual/NotificationProgrammingGuideForWebsites/PushNotifications/PushNotifications.html#//apple_ref/doc/uid/TP40013225-CH3-SW1 ). Plus, seems like you can't really execute JS after the notification is received (only when the web page is opened).
 
+So to start
+
+	curl --header 'Content-Type: application/json' --request POST --data '{"key1": "value1"}' https://indexedmessages.azurewebsites.net/v2/pushPackages/web.net.azurewebsites.indexedmessages
+
+Should download the package.zip that will be used to ask for notifications (with icon and all).
+
 # Searching by Index
 To return the items of the correct partition we use index.getAll, which is not supported by Internet Explorer.
+
