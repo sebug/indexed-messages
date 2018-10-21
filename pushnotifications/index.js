@@ -62,5 +62,16 @@ Promise.all(sizesWithMultiplier.map(o => {
 	    });
 	});
 }).concat([websiteJSONPromise])).then(filesWithDigest => {
-    console.log(filesWithDigest);
+    let manifest = {};
+    filesWithDigest.forEach(f => {
+	manifest[f.fileName] = {
+	    hashType: f.hashType,
+	    hashValue: f.hashValue
+	};
+    });
+    return manifest;
+}).then(manifest => {
+    return fs.outputFile(filePrefix + 'manifest.json', JSON.stringify(manifest));
+}).then(() => {
+    console.log('written manifest.json');
 });
