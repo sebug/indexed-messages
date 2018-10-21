@@ -40,7 +40,7 @@ module.exports = function (context, req) {
 	    context.done();
 	});
     } catch (e) {
-	context.log(JSON.stringify(e));
+	context.log(e);
 	context.res = {
 		status: 500,
 		body: 'an error occurred'
