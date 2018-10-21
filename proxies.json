@@ -71,6 +71,15 @@
 		"route": "/v2/devices/{*deviceToken}/registrations/{websitePushID}"
 	    },
 	    "backendUri": "https://localhost/api/RegisterDevicePermissionPolicy?deviceToken={deviceToken}&websitePushID={websitePushID}"
+	},
+	"forgetDevicePermissionPolicy": {
+	    "matchCondition": {
+		"methods": [
+		    "DELETE"
+		],
+		"route": "/v2/devices/{*deviceToken}/registrations/{websitePushID}"
+	    },
+	    "backendUri": "https://localhost/api/ForgetDevicePermissionPolicy?deviceToken={deviceToken}&websitePushID={websitePushID}"
 	}
     }
 }
