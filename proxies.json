@@ -61,7 +61,7 @@
 		],
 		"route": "/v2/pushPackages/{*websitePushID}"
 	    },
-	    "backendUri": "https://localhost/api/DownloadPushPackageTrigger?version=v2&websitePushID={websitePushID}"
+	    "backendUri": "https://indexedwebsites.azurewebsites.net/api/DownloadPushPackageTrigger?version=v2&websitePushID={websitePushID}"
 	},
 	"registerDevicePermissionPolicy": {
 	    "matchCondition": {
@@ -71,7 +71,7 @@
 		],
 		"route": "/v2/devices/{*deviceToken}/registrations/{websitePushID}"
 	    },
-	    "backendUri": "https://localhost/api/RegisterDevicePermissionPolicy?deviceToken={deviceToken}&websitePushID={websitePushID}"
+	    "backendUri": "https://indexedmessages.azurewebsites.net/api/RegisterDevicePermissionPolicy?deviceToken={deviceToken}&websitePushID={websitePushID}"
 	},
 	"logDeviceRegistrationError": {
 	    "matchCondition": {
@@ -80,7 +80,7 @@
 		],
 		"route": "/v2/log"
 	    },
-	    "backendUri": "https://localhost/api/LogDeviceRegistrationError"
+	    "backendUri": "https://indexedmessages.azurewebsites.net/api/LogDeviceRegistrationError"
 	}
     }
 }
