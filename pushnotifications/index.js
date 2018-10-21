@@ -2,6 +2,7 @@ const sharp = require('sharp');
 const crypto = require('crypto');
 const fs = require('fs-extra');
 const forge = require('node-forge');
+const archiver = require('archiver');
 
 const sizes = [16, 32, 128];
 const sizesWithMultiplier = sizes.map(size => {
@@ -109,5 +110,18 @@ Promise.all(sizesWithMultiplier.map(o => {
     return fs.outputFile(filePrefix + 'signature', derBytes);
 
 }).then(() => {
-    console.log('signature written');
+    let output = fs.createWriteStream('dist/out/package.zip');
+    const archive = archiver('zip');
+    output.on('close', function () {
+	console.log(archive.pointer() + ' total bytes');
+	console.log('archiver has been finalized and the output file descriptor has closed.');
+    });
+
+    archive.on('error', function(err){
+	throw err;
+    });
+
+    archive.pipe(output);
+    archive.glob('**/*', { cwd: filePrefix });
+    archive.finalize();
 });

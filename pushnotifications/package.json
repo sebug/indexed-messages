@@ -7,9 +7,10 @@
   "license": "MIT",
   "private": false,
   "scripts": {
-    "build": "mkdir -p dist/IndexedMessages.pushpackage/icon.iconset && node index.js"
+    "build": "mkdir -p dist/IndexedMessages.pushpackage/icon.iconset && mkdir -p dist/out && node index.js"
   },
   "dependencies": {
+    "archiver": "^3.0.0",
     "fs-extra": "^7.0.0",
     "node-forge": "^0.7.6",
     "sharp": "^0.21.0"
