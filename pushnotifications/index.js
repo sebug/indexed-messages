@@ -74,12 +74,19 @@ Promise.all(sizesWithMultiplier.map(o => {
 }).then(manifest => {
     return fs.outputFile(filePrefix + 'manifest.json', JSON.stringify(manifest));
 }).then(() => {
-    console.log('written manifest.json');
+    return fs.readFile(filePrefix + 'manifest.json', 'utf-8')
+}).then(manifestJSON => {
     const p12Base64 = process.env.PUSH_NOTIFICATION_P12;
     const p12pass = process.env.PUSH_NOTIFICATION_CERT_PASSWORD;
     const p12Der = forge.util.decode64(p12Base64);
     const p12Asn1 = forge.asn1.fromDer(p12Der, false);
     const p12Parsed = forge.pkcs12.pkcs12FromAsn1(p12Asn1, false, p12pass);
-    
-    console.log(p12Parsed);
+
+    const privateBag = p12Parsed.safeContents.filter(c => c.encrypted)[0];
+
+    const privateCert = privateBag.safeBags[0].cert;
+
+    const appleCert = forge.pem.decode(process.env.PUSH_NOTIFICATION_APPLE_PEM);
+
+    console.log(appleCert);
 });
