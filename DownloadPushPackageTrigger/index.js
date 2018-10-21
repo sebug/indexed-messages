@@ -6,7 +6,7 @@ module.exports = function (context, req) {
     context.log('website push ID is ' + req.query.websitePushID);
     context.log('blob contents are');
 
-    const zipRequest = http.request('https://indexedmessages.azurewebsites.net/static/package.zip', (res) => {
+    const zipRequest = https.request('https://indexedmessages.azurewebsites.net/static/package.zip', (res) => {
 	var body = "";
 
 	res.on("data", (chunk) => {
