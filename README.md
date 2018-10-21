@@ -49,6 +49,4 @@ The other register and delete functions should work as well.
 # Searching by Index
 To return the items of the correct partition we use index.getAll, which is not supported by Internet Explorer.
 
-# Deployment
-All done through Azure pipelines. We'll see whether that works for the Azure Functions.
 
