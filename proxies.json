@@ -80,6 +80,15 @@
 		"route": "/v2/devices/{*deviceToken}/registrations/{websitePushID}"
 	    },
 	    "backendUri": "https://localhost/api/ForgetDevicePermissionPolicy?deviceToken={deviceToken}&websitePushID={websitePushID}"
+	},
+	"logDeviceRegistrationError": {
+	    "matchCondition": {
+		"methods": [
+		    "POST"
+		],
+		"route": "/v2/log"
+	    },
+	    "backendUri": "https://localhost/api/LogDeviceRegistrationError"
 	}
     }
 }
