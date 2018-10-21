@@ -51,4 +51,5 @@ To return the items of the correct partition we use index.getAll, which is not s
 
 
 # Builds
-Turns out that Azure functions keeps old files around during build. So now I'm kind of screwed until they're invalidated...
+Turns out that Azure functions keeps old files around during build. So now I'm kind of screwed until they're invalidated!
+
