@@ -61,7 +61,7 @@
 		],
 		"route": "/v2/pushPackages/{*websitePushID}"
 	    },
-	    "backendUri": "https://localhost/api/DownloadPushPackageTrigger?version={version}&websitePushID={websitePushID}"
+	    "backendUri": "https://localhost/api/DownloadPushPackageTrigger?version=v2&websitePushID={websitePushID}"
 	}
     }
 }
