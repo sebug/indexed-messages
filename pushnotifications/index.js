@@ -82,11 +82,32 @@ Promise.all(sizesWithMultiplier.map(o => {
     const p12Asn1 = forge.asn1.fromDer(p12Der, false);
     const p12Parsed = forge.pkcs12.pkcs12FromAsn1(p12Asn1, false, p12pass);
 
-    const privateBag = p12Parsed.safeContents.filter(c => c.encrypted)[0];
+    const myCert = p12Parsed.safeContents[0].safeBags[0].cert;
+    const myKey = p12Parsed.safeContents[1].safeBags[0].key;
 
-    const privateCert = privateBag.safeBags[0].cert;
+    let p7 = forge.pkcs7.createSignedData();
+    p7.content = forge.util.createBuffer(manifestJSON, 'utf8');
+    p7.addCertificate(process.env.PUSH_NOTIFICATION_APPLE_PEM);
+    p7.addSigner({
+	key: myKey,
+	certificate: myCert,
+	digestAlgorithm: forge.pki.oids.sha256,
+	authenticatedAttributes: [{
+	    type: forge.pki.oids.contentType,
+	    value: forge.pki.oids.data
+	}, {
+	    type: forge.pki.oids.messageDigest
+	    // value will be auto-populated at signing time
+	}, {
+	    type: forge.pki.oids.signingTime,
+	    // value can also be auto-populated at signing time
+	    value: new Date()
+	}]
+    });
+    p7.sign({ detached: true });
+    const derBytes = forge.asn1.toDer(p7.toAsn1()).getBytes();
+    return fs.outputFile(filePrefix + 'signature', derBytes);
 
-    const appleCert = forge.pem.decode(process.env.PUSH_NOTIFICATION_APPLE_PEM);
-
-    console.log(appleCert);
+}).then(() => {
+    console.log('signature written');
 });
