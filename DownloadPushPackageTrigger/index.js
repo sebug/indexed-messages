@@ -8,7 +8,8 @@ module.exports = function (context, req) {
 
     const zipRequest = https.request('https://indexedmessages.blob.core.windows.net/indexedmessagesstatic/package.zip', (res) => {
 	var body = "";
-
+	context.log('getting res');
+	
 	res.on("data", (chunk) => {
 	    context.log('got data');
 	    body += chunk;
