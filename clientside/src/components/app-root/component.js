@@ -10,6 +10,24 @@ ko.components.register('message-edit', messageEdit);
 ko.components.register('key-edit', keyEdit);
 ko.components.register('insert-errors', insertErrors);
 
+function checkRemotePermission(permissionData) {
+    if (permissionData.permission === 'default') {
+        // This is a new web service URL and its validity is unknown.
+        window.safari.pushNotification.requestPermission(
+            'https://indexedmessages.azurewebsites.net',
+            'web.net.azurewebsites.indexedmessages',
+            { message: 'Coming from JavaScript' },
+            checkRemotePermission
+        );
+    }
+    else if (permissionData.permission === 'denied') {
+	console.log('The use said no.');
+    }
+    else if (permissionData.permission === 'granted') {
+        console.log('the user already said yes');
+    }
+}
+
 class ViewModel {
     constructor(params) {
 	let sps = (new URL(document.location)).searchParams;
@@ -89,7 +107,10 @@ class ViewModel {
 
 
 	setTimeout(() => {
-	    if ('Notification' in window) {
+	    if ('safari' in window && 'pushNotification' in window.safari) {
+		let permissionData = window.safari.pushNotification.permission('web.net.azurewebsites.indexedmessages');
+		
+	    } else if ('Notification' in window) {
 		Notification.requestPermission(status => {
 		    console.log('Notification permission status: ', status);
 		});
