@@ -1,8 +1,6 @@
 const azure = require('azure-storage');
 
 module.exports = function (context, req) {
-    context.log('Registering device permission policy');
-
     const deviceToken = req.query.deviceToken;
     const websitePushID = req.query.websitePushID;
 
@@ -13,6 +11,7 @@ module.exports = function (context, req) {
     const entGen = azure.TableUtilities.entityGenerator;
 
     if (req.method.toLowerCase() === 'delete') {
+	context.log('Removing device registration');
 	var task = {
 	    PartitionKey: {'_':'prod'},
 	    RowKey: {'_': deviceToken}
@@ -34,6 +33,7 @@ module.exports = function (context, req) {
 	    }
 	});
     } else {
+	context.log('Registering device permission policy');
 	const entity = {
 	    PartitionKey: entGen.String('prod'),
 	    RowKey: entGen.String(deviceToken),
