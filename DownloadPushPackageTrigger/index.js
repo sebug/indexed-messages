@@ -12,6 +12,7 @@ module.exports = function (context, req) {
     //Override the write to store the value to our "contents"
     // see https://stackoverflow.com/questions/43810082/azure-functions-nodejs-response-body-as-a-stream
     outputStream._write = function (chunk, encoding, done) {
+	context.log('Writing to stream');
         var curChunk = new Uint8Array(chunk);
         var tmp = new Uint8Array(this.contents.byteLength + curChunk.byteLength);
         tmp.set(this.contents, 0);
@@ -19,6 +20,8 @@ module.exports = function (context, req) {
         this.contents = tmp;
         done();
     };
+
+    context.log('starting get blob to stream');
     
     blobService.getBlobToStream('indexedmessagesstatic','package.zip', outputStream, (err, data) => {
 	if (err) {
@@ -42,4 +45,5 @@ module.exports = function (context, req) {
 	    context.done();
 	}
     });
+    context.log('after get blob to stream started');
 };
