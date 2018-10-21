@@ -40,7 +40,7 @@ Well server side they're gonna be a pain for Safari ( https://developer.apple.co
 
 So to start
 
-	curl --header 'Content-Type: application/json' --request POST --data '{"key1": "value1"}' https://indexedmessages.azurewebsites.net/v2/pushPackages/web.net.azurewebsites.indexedmessages
+	curl --header 'Content-Type: application/json' --request POST --data '{"key1": "value1"}' https://indexedmessages.azurewebsites.net/v2/pushPackages/web.net.azurewebsites.indexedmessages -o package2.zip
 
 Should download the package.zip that will be used to ask for notifications (with icon and all).
 
