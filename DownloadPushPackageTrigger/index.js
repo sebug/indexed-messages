@@ -7,7 +7,10 @@ module.exports = function (context, req) {
     context.log('starting zip request');
 
     try {
-	const zipRequest = https.request('https://indexedmessages.blob.core.windows.net/indexedmessagesstatic/package.zip', (res) => {
+	const options = {
+	    timeout: 10 * 1000
+	};
+	const zipRequest = https.request('https://indexedmessages.blob.core.windows.net/indexedmessagesstatic/package.zip', options, (res) => {
 	    var body = "";
 	    context.log('getting res');
 	    
