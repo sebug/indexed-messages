@@ -53,34 +53,6 @@
                 "route": "/static/{*restOfPath}"
             },
             "backendUri": "https://indexedmessages.blob.core.windows.net/indexedmessagesstatic/{restOfPath}"
-        },
-	"downloadPushPackage": {
-	    "matchCondition": {
-		"methods": [
-		    "POST"
-		],
-		"route": "/v2/pushPackages/{*websitePushID}"
-	    },
-	    "backendUri": "https://indexedwebsites.azurewebsites.net/api/DownloadPushPackageTrigger?version=v2&websitePushID={websitePushID}"
-	},
-	"registerDevicePermissionPolicy": {
-	    "matchCondition": {
-		"methods": [
-		    "POST",
-		    "DELETE"
-		],
-		"route": "/v2/devices/{*deviceToken}/registrations/{websitePushID}"
-	    },
-	    "backendUri": "https://indexedmessages.azurewebsites.net/api/RegisterDevicePermissionPolicy?deviceToken={deviceToken}&websitePushID={websitePushID}"
-	},
-	"logDeviceRegistrationError": {
-	    "matchCondition": {
-		"methods": [
-		    "POST"
-		],
-		"route": "/v2/log"
-	    },
-	    "backendUri": "https://indexedmessages.azurewebsites.net/api/LogDeviceRegistrationError"
-	}
+        }
     }
 }
